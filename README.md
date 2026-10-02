@@ -1,3 +1,5 @@
+![G5LIVE — Build · Understand · Apply](assets/brand/g5live.svg)
+
 # Cyber Skills Pathway
 
 A personal, concept-led learning application for building connected Linux, Python, networking and security skills. The aim is understanding and practical judgement, not awarding certificates, professional registration or job qualifications. Certification coverage is an optional reference for learners who choose external assessment.
@@ -115,3 +117,7 @@ UI prose uses UK English and pages declare en-GB. Executable commands, protocol 
 The application has moved from its original command-recall prototype to a concept-led personal learning app: nine clickable topic pages, 30 concepts/150 learning activities, persistent local progress, provisional Security+/CCNA relevance pages, and Quickfire Reinforcement across all nine topics and five levels. The current suite has 21 passing tests, including every topic/level combination and the 5–60-minute timer bounds.
 
 The topic pages are currently simple starter listings. Improved layout/navigation and comprehensive informative skills pages are deliberately recorded as later-stage work above, not features already delivered. Advanced topics contain introductory primers only. Progress bars record starter activity completion; they are not mastery or exam-readiness scores.
+
+## Shared brand and release preparation
+
+Part of the G5LIVE app family. See the [shared brand guide](assets/brand/BRAND.md) and [project-specific release-readiness review](docs/RELEASE_READINESS.md) for proposed functionality and public-release preparation.
