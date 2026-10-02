@@ -21,22 +21,22 @@ Each tier has an icon and a red → amber → green progress bar. Shared concept
 | 🌐 Network Basics | DNS records, IPv4 subnet scope, Python crossover | TCP/UDP, routing, switching, DHCP, VLANs and packet interpretation |
 | 🔎 Security Practitioner | Shared prerequisites only | Connected Security+/CCNA-informed investigations |
 | 🧭 Junior Pentester | Shared prerequisites only | Scoped enumeration, validation and reporting |
-| 📋 Registered Pentester pathway | Planned | Professional assessment methodology; no registration awarded |
+| 📋 Registered Pentester | Planned | Professional assessment methodology; no registration awarded |
 | ⚔️ Offensive Security | Planned | Controlled offensive investigations |
 | 🎯 Red Team Ops | Planned | Authorised operational scenarios |
 | 🧬 Exploit Developer | Planned | Specialist systems and exploit-development foundations |
 
-These are learning areas, not a mandatory career ladder. Networking and security can develop alongside coding and system skills. Advanced areas remain future work. Initial development should stretch slightly beyond the owner's current Linux/Python/networking/security knowledge rather than attempt a complete professional curriculum.
+These are learning areas, not a mandatory career ladder. Networking and security can develop alongside coding and system skills. Each advanced area has an introductory concept; full specialist curricula remain future work. Initial development should stretch slightly beyond the owner's current Linux/Python/networking/security knowledge rather than attempt a complete professional curriculum.
 
 ## What works today
 
 - A dashboard with shared-concept progress across tiers.
 - Manual entry selection and an optional short placement check with user-confirmed recommendations.
-- 24 starter concepts across three areas, with suggested preparation links, worked examples, answer explanations and next-lesson navigation.
+- 30 starter concepts across all nine areas, with suggested preparation links, worked examples, answer explanations and next-lesson navigation.
 - All five learning stages per starter concept; practical submissions are checked but never executed.
 - Local SQLite persistence for one personal learner, surviving app restarts and browser-session changes.
 - Security+ and CCNA starter relevance pages showing completed activities and unassessed evidence.
-- The original 40 Basic/Standard command scenarios remain available under **Command practice**.
+- Quickfire Reinforcement provides timed recall across all nine topics and five learning levels. The original 40 command scenarios remain archived in their JSON files.
 
 This is an expanded foundation library, not complete foundational, Security+ or CCNA courses. Original command exercises are retained as legacy practice rather than automatically counted as evidence on the new dashboard. Their simplified validation rules and content need further review.
 
@@ -79,8 +79,8 @@ python -m unittest discover -s tests -v
 - `cyber-skills-path.py`: Flask setup and retained command-practice routes.
 - `core/learning.py`: concept catalogue, starter mappings and SQLite progress.
 - `core/learning_routes.py`: dashboard, orientation, placement, lesson and coverage routes.
-- `data/learning.json`: 24 concept-led starter cycles.
-- `core/engine.py` and the original JSON files: legacy command practice.
+- `data/learning.json`: 30 concept-led starter cycles.
+- `core/engine.py` and the original JSON files: legacy Quickfire Reinforcement.
 - `templates/`: learning views and original simulated terminal.
 - `tests/`: route, progress and scenario regressions.
 
@@ -94,8 +94,16 @@ No live target interaction, shell execution or attack-box provisioning is implem
 | Security Basics | CIA objectives → permissions → authentication/authorisation → passwords/MFA → phishing → hashes/integrity → threats/risk/controls → logs/recovery |
 | Network Basics | Hosts/switches/routers → IPv4 subnet scope → TCP/UDP/ports → DNS → DHCP → gateways → HTTP/TLS → evidence-led troubleshooting |
 
-Every lesson includes Learn/Observe material and three applied checks, for 120 learning activities across the library. Prerequisites are recommendations, not locks. Successful checks explain why the answer fits; notes remain available for assisted practice. Text answers support whitespace normalisation and case-insensitive concept terms; commands and paths retain case sensitivity. This is still bounded answer checking, not semantic evaluation of free-form explanations.
+Every lesson includes Learn/Observe material and three applied checks, for 150 learning activities across the library. Prerequisites are recommendations, not locks. Successful checks explain why the answer fits; notes remain available for assisted practice. Text answers support whitespace normalisation and case-insensitive concept terms; commands and paths retain case sensitivity. This is still bounded answer checking, not semantic evaluation of free-form explanations.
 
 The quick placement check intentionally retains its original two-to-four-question sample rather than expanding into a full course test. Existing concept IDs and database records remain valid. Adding material expands the progress denominator: percentages can decrease while completed activities stay unchanged. That reflects curriculum coverage, not loss of ability.
 
 Technical further-reading links are included where appropriate, using the GNU Bash manual, Python tutorial, CISA/NIST guidance and IETF protocol specifications. Examples use simulated systems and documentation addresses; no submissions are executed.
+
+## All nine topic pages and Quickfire Reinforcement
+
+Each dashboard heading opens its topic page. The six later topics now include one five-stage starter concept each: evidence-led triage, scope before tools, engagement planning, trust boundaries, exercise objectives, and input bounds. These are introductory material, not full specialist training.
+
+Quickfire Reinforcement uses the same concept library across all nine topics. Its five levels are Learning (with notes), Observing (with worked examples), Practising (practice questions), Reinforcing (different recall questions), and Checking (checkpoint questions). They are learning modes rather than professional difficulty ratings. Timers are 5, 10, 20, 30 or 60 minutes; longer values are rejected by the server. Quickfire completion does not advance persistent learning progress. The former command-practice URL remains a compatibility alias.
+
+UI prose uses UK English and pages declare en-GB. Executable commands, protocol names, programming keywords and CSS/API identifiers keep their required spelling.

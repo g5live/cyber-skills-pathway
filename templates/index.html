@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,7 +88,7 @@
     <!-- Left Side: Scenario and Instructions -->
     <div class="lesson-pane">
         <div class="header">
-            <h2>Command Practice</h2>
+            <h2>Quickfire Reinforcement</h2>
             <div style="display: flex; align-items: center; gap: 20px;">
                 <!-- Timer Display -->
                 <span id="timer-display" style="font-family: monospace; font-size: 1.2rem; background: #333; padding: 5px 10px; border-radius: 4px; color: #FF8C00;">00:00</span>
@@ -98,7 +98,7 @@
 
         <div class="scenario-box">
             <h3>Situation Report</h3>
-            <p>{{ scenario.scenario }}</p>
+            <pre>{{ scenario.scenario }}</pre>{% if scenario.guidance %}<p>{{ scenario.guidance }}</p>{% endif %}
         </div>
 
         <div class="objective-box">
@@ -110,9 +110,9 @@
             <p><strong>Success:</strong> <span id="explanation-text">{{ scenario.explanation }}</span></p>
 
             {% if next_index is not none %}
-                <button class="run-btn" style="background-color: #121212; color: white;" onclick="window.location.href='/scenario/{{ next_index }}'">Next Scenario</button>
+                <button class="run-btn" style="background-color: #121212; color: white;" onclick="window.location.href='/scenario/{{ next_index }}'">Next question</button>
             {% else %}
-                <button class="run-btn" style="background-color: #9b59b6; color: white;" onclick="window.location.href='/results'">Finish Lab & View Results</button>
+                <button class="run-btn" style="background-color: #9b59b6; color: white;" onclick="window.location.href='/results'">Finish Quickfire & View Results</button>
             {% endif %}
         </div>
     </div>
@@ -127,7 +127,7 @@
         <div class="terminal-window">
             <div class="input-line">
                 <span class="prompt">g5@kali</span><span class="prompt-path">:~/labs$</span>
-                <input type="text" id="cli-input" placeholder="Type command here..." autocomplete="off" spellcheck="false" data-index="{{ index }}">
+                <input type="text" id="cli-input" placeholder="Type your answer here..." autocomplete="off" spellcheck="false" data-index="{{ index }}">
             </div>
 
             <div id="terminal-feedback" class="feedback"></div>

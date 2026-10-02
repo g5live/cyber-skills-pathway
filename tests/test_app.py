@@ -31,16 +31,19 @@ class SecurityCommandLabTests(unittest.TestCase):
         return self.client.post(
             "/start",
             data={
-                "difficulty": "basic",
+                "difficulty": "practising",
                 "time_limit": "300",
-                "modules": "security_plus",
+                "modules": "foundations",
             },
         )
 
-    def test_menu_marks_professional_tier_as_planned(self):
+    def test_quickfire_has_five_learning_levels(self):
         response = self.client.get("/command-practice")
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'value="professional" disabled', response.data)
+        for level in ('learning','observing','practising','reinforcing','checking'):
+            self.assertIn(('value="' + level + '"').encode(), response.data)
+        self.assertNotIn(b'value="5400"',response.data)
+        self.assertNotIn(b'value="7200"',response.data)
 
     def test_valid_session_opens_first_scenario(self):
         response = self.start_session()
@@ -50,9 +53,9 @@ class SecurityCommandLabTests(unittest.TestCase):
 
     def test_start_rejects_invalid_inputs(self):
         cases = (
-            {"difficulty": "professional", "time_limit": "300", "modules": "security_plus"},
-            {"difficulty": "basic", "time_limit": "301", "modules": "security_plus"},
-            {"difficulty": "basic", "time_limit": "300", "modules": "../../private"},
+            {"difficulty": "professional", "time_limit": "300", "modules": "foundations"},
+            {"difficulty": "practising", "time_limit": "301", "modules": "foundations"},
+            {"difficulty": "practising", "time_limit": "300", "modules": "../../private"},
         )
         for data in cases:
             with self.subTest(data=data):
@@ -72,7 +75,7 @@ class SecurityCommandLabTests(unittest.TestCase):
         self.start_session()
         response = self.client.post(
             "/api/validate",
-            json={"command": "nmap -sS 192.168.1.0/24", "index": 0},
+            json={"command": "pwd", "index": 0},
         )
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.get_json()["correct"])

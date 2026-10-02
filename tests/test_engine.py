@@ -1,12 +1,12 @@
 import unittest
 
-from core.engine import AVAILABLE_MODULES, build_scenario_list, get_scenario_by_index, validate_command
+from core.engine import AVAILABLE_MODULES, MODULE_FILES, build_scenario_list, get_scenario_by_index, validate_command
 
 
 class ScenarioEngineTests(unittest.TestCase):
     def test_current_library_contains_40_valid_scenarios(self):
         scenario_count = 0
-        for module in AVAILABLE_MODULES:
+        for module in MODULE_FILES:
             for difficulty in ("basic", "standard"):
                 scenarios = build_scenario_list([module], difficulty)
                 self.assertEqual(len(scenarios), 5)

@@ -1,7 +1,7 @@
 import hmac
 import secrets
 from flask import Blueprint, current_app, render_template, request, redirect, url_for, session, abort, flash
-from core.learning import lessons, progress, advance, cards, preference, coverage, STAGES, matches_answer
+from core.learning import lessons, progress, advance, cards, preference, coverage, STAGES, matches_answer, PATHWAYS
 
 learning = Blueprint('learning', __name__)
 PATHS = ('foundations', 'security', 'network')
@@ -26,7 +26,7 @@ def protect_forms():
 
 @learning.context_processor
 def template_helpers():
-    return {'csrf_token': csrf, 'stages': STAGES}
+    return {'csrf_token': csrf, 'stages': STAGES, 'pathway_names': {key: icon + ' ' + title for key, icon, title, _ in PATHWAYS}}
 
 
 @learning.route('/')
@@ -104,3 +104,12 @@ def exam_coverage(exam):
     records = progress(database())
     return render_template('coverage.html', exam='Security+' if exam == 'security_plus' else 'CCNA',
                            lessons=content, records=records, percent=coverage(records, content))
+
+
+@learning.route('/pathway/<path>')
+def pathway(path):
+    card = next((item for item in cards(progress(database())) if item['key'] == path), None)
+    if card is None:
+        abort(404)
+    content = [item for item in lessons() if item['path'] == path]
+    return render_template('pathway.html', card=card, lessons=content, records=progress(database()))

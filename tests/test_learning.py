@@ -26,7 +26,7 @@ class LearningTests(unittest.TestCase):
         for url in ('/', '/orientation', '/coverage/security_plus', '/coverage/ccna', '/placement?path=network'):
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
-        self.assertIn(b'prerequisite exposure', self.client.get('/').data)
+        self.assertIn(b'specialist curriculum planned', self.client.get('/').data)
         self.assertEqual(self.client.get('/coverage/unknown').status_code, 404)
 
     def test_progress_requires_order_and_persists_across_clients(self):
@@ -74,7 +74,7 @@ class FoundationLibraryTests(unittest.TestCase):
         from core.learning import lessons
         content = lessons()
         ids = {item['id'] for item in content}
-        self.assertEqual(len(ids), 24)
+        self.assertEqual(len(ids), 30)
         for path in ('foundations', 'security', 'network'):
             self.assertEqual(sum(item['path'] == path for item in content), 8)
         for item in content:
@@ -119,3 +119,44 @@ class FoundationLibraryTests(unittest.TestCase):
         response = self.post('/learn/python-functions', {'stage':'3','answer':'6'})
         self.assertIn(b'Not quite.',response.data)
         self.assertEqual(progress(self.db)['python-functions'],2)
+
+
+class NineTopicQuickfireTests(unittest.TestCase):
+    setUp = LearningTests.setUp
+    token = LearningTests.token
+    post = LearningTests.post
+
+    def test_all_topic_pages_have_a_starter(self):
+        from core.learning import PATHWAYS, lessons
+        content = lessons()
+        for path, _, title, _ in PATHWAYS:
+            self.assertTrue(any(item['path']==path for item in content))
+            response=self.client.get('/pathway/'+path)
+            self.assertEqual(response.status_code,200)
+            self.assertIn(title.encode(),response.data)
+        self.assertEqual(self.client.get('/pathway/unknown').status_code,404)
+        self.assertNotIn(b'Registered Pentester pathway',self.client.get('/').data)
+
+    def test_each_topic_and_level_can_start_and_accept_an_answer(self):
+        from core.engine import AVAILABLE_MODULES, AVAILABLE_DIFFICULTIES, build_scenario_list
+        for topic in AVAILABLE_MODULES:
+            for level in AVAILABLE_DIFFICULTIES:
+                response=self.client.post('/start',data={'modules':topic,'difficulty':level,'time_limit':'300'})
+                self.assertEqual(response.status_code,302)
+                question=build_scenario_list([topic],level)[0]
+                key={3:'answer',4:'reinforce_answer',5:'checkpoint_answer'}[question['learning_stage']]
+                response=self.client.post('/api/validate',json={'index':0,'command':question['concept'][key]})
+                self.assertTrue(response.get_json()['correct'])
+        self.assertEqual(progress(self.db),{})
+
+    def test_quickfire_timer_bounds_and_real_learning_modes(self):
+        from core.engine import build_scenario_list
+        for timer in (300,600,1200,1800,3600):
+            self.assertEqual(self.client.post('/start',data={'modules':'foundations','difficulty':'learning','time_limit':str(timer)}).status_code,302)
+        for timer in (0,299,3601,5400,7200):
+            self.assertEqual(self.client.post('/start',data={'modules':'foundations','difficulty':'learning','time_limit':str(timer)}).status_code,400)
+        for level in ('basic','standard','professional'):
+            self.assertEqual(self.client.post('/start',data={'modules':'foundations','difficulty':level,'time_limit':'300'}).status_code,400)
+        self.assertTrue(build_scenario_list(['foundations'],'learning')[0]['guidance'])
+        self.assertFalse(build_scenario_list(['foundations'],'checking')[0]['guidance'])
+        self.assertNotEqual(build_scenario_list(['foundations'],'practising')[0]['objective'],build_scenario_list(['foundations'],'checking')[0]['objective'])

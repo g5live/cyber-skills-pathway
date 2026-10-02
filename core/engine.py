@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from core.learning import lessons, matches_answer, PATHWAYS
 
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -9,12 +10,21 @@ MODULE_FILES = {
     "pentesting": DATA_DIR / "pentesting.json",
     "ethical_hacker": DATA_DIR / "ethical_hacker.json",
 }
-AVAILABLE_MODULES = frozenset(MODULE_FILES)
-AVAILABLE_DIFFICULTIES = frozenset({"basic", "standard"})
+AVAILABLE_MODULES = frozenset(key for key, _, _, _ in PATHWAYS)
+AVAILABLE_DIFFICULTIES = frozenset({'learning', 'observing', 'practising', 'reinforcing', 'checking'})
 
 
 def build_scenario_list(modules, difficulty):
-    if difficulty not in AVAILABLE_DIFFICULTIES or not isinstance(modules, (list, tuple)):
+    if difficulty in AVAILABLE_DIFFICULTIES and isinstance(modules, (list, tuple)):
+        stage = {'learning': 3, 'observing': 4, 'practising': 3, 'reinforcing': 4, 'checking': 5}[difficulty]
+        prefix = {3: 'practice', 4: 'reinforce', 5: 'checkpoint'}[stage]
+        return [dict(id=item['id'], scenario=item['observe'] if difficulty == 'observing' else 'Recall and apply this concept: ' + item['title'],
+                     objective=item[prefix], explanation=item[prefix + '_feedback'],
+                     guidance=item['learn'] if difficulty == 'learning' else '',
+                     concept=item, learning_stage=stage)
+                for item in lessons() if item['path'] in modules]
+    # Original command scenarios remain readable as archived material.
+    if difficulty not in ('basic', 'standard') or not isinstance(modules, (list, tuple)):
         return []
 
     scenarios = []
@@ -51,6 +61,10 @@ def validate_command(user_input, modules, difficulty, index):
     scenario = get_scenario_by_index(modules, difficulty, index)
     if not scenario:
         return {"correct": False, "message": "Scenario not found."}
+
+    if 'concept' in scenario:
+        correct = matches_answer(scenario['concept'], scenario['learning_stage'], user_input)
+        return {'correct': correct, 'message': 'Answer matches this exercise.' if correct else 'Not quite. Revisit the concept and try again.'}
 
     val = scenario.get("validation", {})
     user_parts = user_input.strip().split()

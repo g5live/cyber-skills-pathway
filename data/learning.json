@@ -873,5 +873,197 @@
     "checkpoint_feedback": "The successful DNS result shifts attention to the connection path and service, while further evidence is still needed.",
     "sources": [],
     "case_sensitive": false
+  },
+  {
+    "id": "evidence-triage",
+    "title": "Security practitioner: observations and evidence",
+    "path": "practitioner",
+    "tiers": [
+      "practitioner"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "logs-recovery",
+      "network-troubleshooting"
+    ],
+    "learn": "Triage separates observed facts from possible explanations. Record the system, time and observation, then compare related events. Prioritise by impact and urgency while keeping uncertainty visible. A failed login is not a confirmed compromise. A useful note records what happened, what remains unknown and the next check. Preserve evidence before changing the system when practical.",
+    "observe": "Observation: five rejected sign-ins for one account.\nHypothesis: mistyped credentials or attempted misuse.\nNext check: compare source, timing and related successful sign-ins.\nConclusion: cause not yet established.",
+    "takeaways": [
+      "Separate observations from assumptions.",
+      "This starter is preparation for later specialist learning."
+    ],
+    "connection": "Build on the suggested foundational concepts before moving into specialist exercises.",
+    "minutes": 8,
+    "case_sensitive": false,
+    "sources": [],
+    "practice": "Do rejected sign-ins alone prove compromise? Answer yes or no.",
+    "answer": "no",
+    "practice_feedback": "Rejected attempts do not establish successful unauthorised access.",
+    "reinforce": "Choose the better note: observed facts or unsupported certainty.",
+    "reinforce_answer": "observed facts",
+    "reinforce_feedback": "Facts and uncertainty make the reasoning reviewable.",
+    "checkpoint": "A dashboard reports a suspicious event without supporting logs. Should you corroborate or declare compromise?",
+    "checkpoint_answer": "corroborate",
+    "checkpoint_feedback": "Check supporting evidence before making that conclusion."
+  },
+  {
+    "id": "scope-basics",
+    "title": "Junior pentester: scope before tools",
+    "path": "junior",
+    "tiers": [
+      "junior"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "identity",
+      "network-troubleshooting"
+    ],
+    "learn": "A practice assessment starts by identifying the approved target and permitted actions. Owning a laptop or connecting to a network does not mean every connected system is an approved target. Clarify uncertainty before acting. For this starter, all examples are simulated: identify scope, record observations and explain the next step rather than sending traffic to a system. A repeatable method is more useful than a memorised tool name.",
+    "observe": "Exercise scope: lab-web-01 only.\nObservation: lab-web-02 appears in a diagram.\nDecision: lab-web-02 is not included merely because it is visible.",
+    "takeaways": [
+      "Separate observations from assumptions.",
+      "This starter is preparation for later specialist learning."
+    ],
+    "connection": "Build on the suggested foundational concepts before moving into specialist exercises.",
+    "minutes": 8,
+    "case_sensitive": false,
+    "sources": [],
+    "practice": "Is lab-web-02 in the stated lab-web-01-only scope? Answer yes or no.",
+    "answer": "no",
+    "practice_feedback": "Visibility is not inclusion in the stated exercise scope.",
+    "reinforce": "If permitted actions are unclear, choose clarify first or proceed anyway.",
+    "reinforce_answer": "clarify first",
+    "reinforce_feedback": "Clarify the boundaries before choosing a tool or action.",
+    "checkpoint": "Does reaching another system from the lab automatically make it an approved target? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "Reachability does not establish scope or permission."
+  },
+  {
+    "id": "assessment-planning",
+    "title": "Registered pentester pathway: engagement planning",
+    "path": "registered",
+    "tiers": [
+      "registered"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "scope-basics",
+      "risk-controls"
+    ],
+    "learn": "Professional assessment work needs agreed scope, permitted techniques, timing, contact details and reporting expectations. A stop condition states when testing must pause, for example when a stated service-impact threshold is reached. Findings should distinguish evidence, impact and recommendations. This starter explains engagement planning; completing it does not grant professional registration or establish competence in an external qualification.",
+    "observe": "Practice plan: one simulated service, one agreed window.\nStop condition: service becomes unavailable.\nContact: named exercise owner.\nReport: observation, evidence, impact, recommendation.",
+    "takeaways": [
+      "Separate observations from assumptions.",
+      "This starter is preparation for later specialist learning."
+    ],
+    "connection": "Build on the suggested foundational concepts before moving into specialist exercises.",
+    "minutes": 8,
+    "case_sensitive": false,
+    "sources": [],
+    "practice": "Is an agreed stop condition part of preparation or a reason to ignore disruption? Answer preparation or ignore.",
+    "answer": "preparation",
+    "practice_feedback": "Stop conditions make the response to disruption explicit before work starts.",
+    "reinforce": "The stated stop condition occurs. Choose pause and notify or continue testing.",
+    "reinforce_answer": "pause and notify",
+    "reinforce_feedback": "Follow the agreed response rather than expanding the impact.",
+    "checkpoint": "Does completing this starter grant professional registration? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "This is a learning activity, not a registration process."
+  },
+  {
+    "id": "trust-boundaries",
+    "title": "Offensive security: trust boundaries and assumptions",
+    "path": "offensive",
+    "tiers": [
+      "offensive"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "identity",
+      "scope-basics"
+    ],
+    "learn": "A trust boundary separates components or users with different permissions or assumptions. Data crossing it should be validated and access checked. User-controlled identifiers are not proof of authorisation. Reason about a simulated request by asking who supplied each value, what access is intended and where the server must enforce it. This is a defensive reasoning primer; it does not run attacks or establish advanced offensive capability.",
+    "observe": "Client requests report_id=17.\nServer identifies the signed-in user.\nServer checks whether that user may read report 17.\nChanging a client value does not replace the access check.",
+    "takeaways": [
+      "Separate observations from assumptions.",
+      "This starter is preparation for later specialist learning."
+    ],
+    "connection": "Build on the suggested foundational concepts before moving into specialist exercises.",
+    "minutes": 8,
+    "case_sensitive": false,
+    "sources": [],
+    "practice": "Should a server trust a user-supplied role value without checking it? Answer yes or no.",
+    "answer": "no",
+    "practice_feedback": "Client-controlled data is not authoritative evidence of access rights.",
+    "reinforce": "Which side should enforce access to a protected report: client or server?",
+    "reinforce_answer": "server",
+    "reinforce_feedback": "The client can be changed; the trusted service must enforce its own access decisions.",
+    "checkpoint": "A user can guess a record identifier. Does that alone entitle them to read the record? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "Knowing an identifier is separate from authorisation."
+  },
+  {
+    "id": "exercise-objectives",
+    "title": "Red team ops: objectives and controlled exercises",
+    "path": "redteam",
+    "tiers": [
+      "redteam"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "assessment-planning",
+      "evidence-triage"
+    ],
+    "learn": "A controlled exercise starts with an agreed objective: for example, whether a simulated event is detected and escalated. Define participants, boundaries, evidence to collect and stop conditions before choosing activities. Success is measured against the objective rather than the number of tools used. A debrief records observations and improvements. This starter covers exercise design only; operational tooling and live actions remain future work.",
+    "observe": "Objective: test escalation of a simulated alert.\nObservation: alert created at 10:00; owner notified at 10:12.\nDebrief: compare the timeline with the agreed expectation.\nNo live action is performed in this lesson.",
+    "takeaways": [
+      "Separate observations from assumptions.",
+      "This starter is preparation for later specialist learning."
+    ],
+    "connection": "Build on the suggested foundational concepts before moving into specialist exercises.",
+    "minutes": 8,
+    "case_sensitive": false,
+    "sources": [],
+    "practice": "Should activity selection follow an agreed objective? Answer yes or no.",
+    "answer": "yes",
+    "practice_feedback": "The objective gives the activity a reason and defines what evidence matters.",
+    "reinforce": "Choose the useful exercise record: timeline and evidence or tool count alone.",
+    "reinforce_answer": "timeline and evidence",
+    "reinforce_feedback": "A timeline connects observations with the detection and response objective.",
+    "checkpoint": "Does one completed alert exercise prove full operational readiness? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "It provides evidence about that exercise, not all operational skills."
+  },
+  {
+    "id": "input-boundaries",
+    "title": "Exploit developer: inputs, bounds and failures",
+    "path": "exploit",
+    "tiers": [
+      "exploit"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "python-control",
+      "python-functions"
+    ],
+    "learn": "Robust programs check input shape and handle invalid values. A collection has a finite length; an index outside it is invalid. In Python, list indexing beyond the end raises IndexError rather than returning an arbitrary value. A crash alone does not demonstrate an exploitable vulnerability. Start by reproducing the failure with a small test, identifying the assumption and correcting validation. Memory models and exploitation techniques are later specialist content.",
+    "observe": "values = [10, 20, 30]\nvalues[2]  # 30\nvalues[3]  # raises IndexError\n# Valid indexes here are 0, 1 and 2.",
+    "takeaways": [
+      "Separate observations from assumptions.",
+      "This starter is preparation for later specialist learning."
+    ],
+    "connection": "Build on the suggested foundational concepts before moving into specialist exercises.",
+    "minutes": 8,
+    "case_sensitive": false,
+    "sources": [],
+    "practice": "What is the highest valid index in [10, 20, 30]?",
+    "answer": "2",
+    "practice_feedback": "A three-item list uses zero-based indexes 0 through 2.",
+    "reinforce": "Does a program crash alone prove exploitability? Answer yes or no.",
+    "reinforce_answer": "no",
+    "reinforce_feedback": "A failure needs investigation; it is not proof of a controllable security impact.",
+    "checkpoint": "Which Python exception does values[3] raise for that three-item list?",
+    "checkpoint_answer": "IndexError",
+    "checkpoint_feedback": "The index lies outside the list bounds."
   }
 ]

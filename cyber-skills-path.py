@@ -3,6 +3,7 @@ import secrets
 import time
 from pathlib import Path
 from core.learning_routes import learning
+from core.learning import PATHWAYS
 
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session
 from core.engine import (
@@ -14,7 +15,7 @@ from core.engine import (
 )
 
 
-ALLOWED_TIME_LIMITS = frozenset({300, 600, 1200, 1800, 3600, 5400, 7200})
+ALLOWED_TIME_LIMITS = frozenset({300, 600, 1200, 1800, 3600})
 MAX_COMMAND_LENGTH = 500
 
 app = Flask(__name__)
@@ -28,9 +29,10 @@ app.config['PROGRESS_DB'] = os.environ.get('PROGRESS_DB') or str(Path(__file__).
 app.register_blueprint(learning)
 
 
+@app.route('/quickfire-reinforcement')
 @app.route('/command-practice')
 def home():
-    return render_template('menu.html')
+    return render_template('menu.html', pathways=PATHWAYS)
 
 
 @app.route('/start', methods=['POST'])
@@ -43,11 +45,11 @@ def start_lab():
 
     selected_modules = request.form.getlist('modules')
     if not selected_modules:
-        selected_modules = ['security_plus']
+        selected_modules = ['foundations']
     selected_modules = list(dict.fromkeys(selected_modules))
 
     if difficulty not in AVAILABLE_DIFFICULTIES:
-        return "Invalid difficulty selection.", 400
+        return "Invalid learning level selection.", 400
     if time_limit not in ALLOWED_TIME_LIMITS:
         return "Invalid session timer.", 400
     if any(module not in AVAILABLE_MODULES for module in selected_modules):

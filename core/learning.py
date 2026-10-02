@@ -4,14 +4,14 @@ from contextlib import contextmanager
 import sqlite3
 from pathlib import Path
 
-STAGES = ('Learn', 'Observe', 'Practice', 'Reinforce', 'Checkpoint')
+STAGES = ('Learning', 'Observing', 'Practising', 'Reinforcing', 'Checking')
 PATHWAYS = [
     ('foundations', '🧱', 'Foundational Skills', False),
     ('security', '🛡️', 'Security Basics', False),
     ('network', '🌐', 'Network Basics', False),
     ('practitioner', '🔎', 'Security Practitioner', True),
     ('junior', '🧭', 'Junior Pentester', True),
-    ('registered', '📋', 'Registered Pentester pathway', True),
+    ('registered', '📋', 'Registered Pentester', True),
     ('offensive', '⚔️', 'Offensive Security', True),
     ('redteam', '🎯', 'Red Team Ops', True),
     ('exploit', '🧬', 'Exploit Developer', True),
@@ -68,7 +68,8 @@ def cards(records):
     for key, icon, title, planned in PATHWAYS:
         mapped = [item for item in content if key in item['tiers']]
         result.append(dict(key=key, icon=icon, title=title, planned=planned,
-                           percent=coverage(records, mapped), count=len(mapped)))
+                           percent=coverage(records, mapped), count=len(mapped),
+                           own_count=sum(item['path'] == key for item in mapped)))
     return result
 
 
