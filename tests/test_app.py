@@ -1,10 +1,11 @@
 import importlib.util
 import unittest
+import tempfile
 from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-APP_PATH = PROJECT_ROOT / "sec-command.py"
+APP_PATH = PROJECT_ROOT / "cyber-skills-path.py"
 
 
 def load_application():
@@ -21,6 +22,9 @@ class SecurityCommandLabTests(unittest.TestCase):
         cls.module.app.config.update(TESTING=True, SECRET_KEY="test-secret")
 
     def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.module.app.config['PROGRESS_DB'] = str(Path(self.directory.name) / 'test.sqlite3')
         self.client = self.module.app.test_client()
 
     def start_session(self):
@@ -34,7 +38,7 @@ class SecurityCommandLabTests(unittest.TestCase):
         )
 
     def test_menu_marks_professional_tier_as_planned(self):
-        response = self.client.get("/")
+        response = self.client.get("/command-practice")
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'value="professional" disabled', response.data)
 

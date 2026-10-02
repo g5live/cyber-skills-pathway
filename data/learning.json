@@ -1,0 +1,129 @@
+[
+  {
+    "id": "linux-navigation",
+    "title": "Linux: orient yourself",
+    "path": "foundations",
+    "tiers": [
+      "foundations",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [],
+    "learn": "A shell accepts commands. The working directory is your current location. pwd prints its absolute path; ls lists entries; cd changes directory. A path beginning with / is absolute. .. means the parent directory.",
+    "observe": "$ pwd\n/home/learner/labs\n$ ls\nnotes  samples\n$ cd ..\n$ pwd\n/home/learner",
+    "practice": "You are in /home/learner/labs. Which command prints your current directory?",
+    "answer": "pwd",
+    "reinforce": "You are in /home/learner/labs/samples. Enter a command to move up one directory.",
+    "reinforce_answer": "cd ..",
+    "checkpoint": "You are somewhere unfamiliar. Enter a command to move directly to /tmp using an absolute path.",
+    "checkpoint_answer": "cd /tmp"
+  },
+  {
+    "id": "python-data",
+    "title": "Python: values and dictionaries",
+    "path": "foundations",
+    "tiers": [
+      "foundations",
+      "network",
+      "practitioner"
+    ],
+    "exams": [
+      "ccna"
+    ],
+    "learn": "Variables name values. A dictionary stores key/value pairs. Square brackets retrieve a value by key. print displays a value; it does not return it from a function. This exercise interprets Python without executing submitted code.",
+    "observe": "device = {\"host\": \"router-1\", \"port\": 22}\nprint(device[\"host\"])\n# output: router-1",
+    "practice": "For device = {\"host\": \"router-1\", \"port\": 22}, what value does device[\"port\"] produce?",
+    "answer": "22",
+    "reinforce": "For ports = [22, 80, 443], what value does ports[1] produce? Indexes begin at zero.",
+    "reinforce_answer": "80",
+    "checkpoint": "For result = {\"status\": \"closed\", \"port\": 443}, what value does result[\"status\"] produce?",
+    "checkpoint_answer": "closed"
+  },
+  {
+    "id": "permissions",
+    "title": "Linux permissions and least privilege",
+    "path": "security",
+    "tiers": [
+      "foundations",
+      "security",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "security_plus"
+    ],
+    "learn": "Permissions apply to owner, group and others. Read=4, write=2, execute=1. Each octal digit adds permissions for one class. Least privilege gives only the access needed. A private key normally needs owner read/write, not execution.",
+    "observe": "$ chmod 600 id_rsa\n$ ls -l id_rsa\n-rw------- 1 learner learner ... id_rsa\n# Only the owner has read/write access.",
+    "practice": "Which octal permission gives owner read/write and nobody else any access?",
+    "answer": "600",
+    "reinforce": "What does the owner digit 4 allow? Answer read, write or execute.",
+    "reinforce_answer": "read",
+    "checkpoint": "A report should be readable/writable by its owner and readable by its group, with no access for others. Give its octal permission.",
+    "checkpoint_answer": "640"
+  },
+  {
+    "id": "integrity",
+    "title": "Integrity, hashes and evidence",
+    "path": "security",
+    "tiers": [
+      "security",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "security_plus"
+    ],
+    "learn": "A cryptographic hash summarises bytes. A changed digest signals changed content when compared with a trusted reference. Matching an untrusted digest does not prove a download is safe. Encryption is reversible with a key; hashing is not decryption.",
+    "observe": "$ sha256sum report.txt\n<digest>  report.txt\n# Compare this digest with a reference obtained through a trusted channel.",
+    "practice": "Enter the Linux command to calculate a SHA-256 digest of report.txt.",
+    "answer": "sha256sum report.txt",
+    "reinforce": "Does a matching hash from an untrusted source prove a file is safe? Answer yes or no.",
+    "reinforce_answer": "no",
+    "checkpoint": "A file has a different SHA-256 digest from your trusted reference. Is its integrity confirmed? Answer yes or no.",
+    "checkpoint_answer": "no"
+  },
+  {
+    "id": "dns",
+    "title": "DNS: names, records and troubleshooting",
+    "path": "network",
+    "tiers": [
+      "network",
+      "security",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "ccna",
+      "security_plus"
+    ],
+    "learn": "DNS resolves names and other records. A records contain IPv4 addresses; AAAA records contain IPv6 addresses; MX records identify mail exchangers. Successful name resolution alone does not prove the destination service is reachable.",
+    "observe": "$ dig example.com A\n;; ANSWER SECTION:\nexample.com. 300 IN A 192.0.2.10\n# Illustrative output. No network request is executed here.",
+    "practice": "Which DNS record type represents an IPv4 address?",
+    "answer": "A",
+    "reinforce": "Which DNS record type represents an IPv6 address?",
+    "reinforce_answer": "AAAA",
+    "checkpoint": "DNS resolves a web server name. Does that alone prove its HTTPS service is reachable? Answer yes or no.",
+    "checkpoint_answer": "no"
+  },
+  {
+    "id": "subnets",
+    "title": "IPv4: addresses and subnet scope",
+    "path": "network",
+    "tiers": [
+      "network",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "ccna"
+    ],
+    "learn": "An IPv4 address has 32 bits. A /24 prefix uses 24 network bits and leaves 8 host bits: 256 addresses. In a conventional IPv4 /24 subnet, one address is the network identifier and one is broadcast, leaving 254 usable host addresses.",
+    "observe": "192.0.2.0/24\nNetwork: 192.0.2.0\nHosts: 192.0.2.1\u2013192.0.2.254\nBroadcast: 192.0.2.255",
+    "practice": "How many host bits remain in an IPv4 /24?",
+    "answer": "8",
+    "reinforce": "How many usable host addresses are in a conventional IPv4 /24 subnet?",
+    "reinforce_answer": "254",
+    "checkpoint": "For 198.51.100.0/24, give the broadcast address.",
+    "checkpoint_answer": "198.51.100.255"
+  }
+]

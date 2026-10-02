@@ -88,7 +88,7 @@
     <!-- Left Side: Scenario and Instructions -->
     <div class="lesson-pane">
         <div class="header">
-            <h2>Scenario Training</h2>
+            <h2>Command Practice</h2>
             <div style="display: flex; align-items: center; gap: 20px;">
                 <!-- Timer Display -->
                 <span id="timer-display" style="font-family: monospace; font-size: 1.2rem; background: #333; padding: 5px 10px; border-radius: 4px; color: #FF8C00;">00:00</span>
@@ -133,7 +133,7 @@
             <div id="terminal-feedback" class="feedback"></div>
         </div>
 
-        <button class="run-btn" onclick="executeCommand()">Run Command</button>
+        <button class="run-btn" onclick="executeCommand()">Check Answer</button>
     </div>
 
     <script>
@@ -207,7 +207,7 @@
             container.replaceChildren();
 
             if (command) {
-                container.append(document.createTextNode(`> Executing: ${command}`));
+                container.append(document.createTextNode(`> Submitted: ${command}`));
                 container.append(document.createElement('br'));
             }
 

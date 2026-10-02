@@ -1,6 +1,8 @@
 import os
 import secrets
 import time
+from pathlib import Path
+from core.learning_routes import learning
 
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session
 from core.engine import (
@@ -22,8 +24,11 @@ app.config.update(
     SESSION_COOKIE_SAMESITE="Lax",
 )
 
+app.config['PROGRESS_DB'] = os.environ.get('PROGRESS_DB') or str(Path(__file__).resolve().parent / 'progress.sqlite3')
+app.register_blueprint(learning)
 
-@app.route('/')
+
+@app.route('/command-practice')
 def home():
     return render_template('menu.html')
 

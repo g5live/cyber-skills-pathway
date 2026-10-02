@@ -70,4 +70,4 @@ def validate_command(user_input, modules, difficulty, index):
     if missing:
         return {"correct": False, "message": "[-] Error: Missing required flags, incorrect IP, or invalid syntax."}
 
-    return {"correct": True, "message": "[+] Command successful. Executing scan..."}
+    return {"correct": True, "message": "[+] Answer matches this simulated exercise. No command was executed."}

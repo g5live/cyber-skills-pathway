@@ -1,192 +1,87 @@
-# Security Command Lab
+# Cyber Skills Pathway
 
-Security Command Lab is a developing Flask web application that turns cybersecurity knowledge into short, practical command-line challenges.
+A personal, concept-led learning application for building connected Linux, Python, networking and security skills. The aim is understanding and practical judgement, not awarding certificates, professional registration or job qualifications. Certification coverage is an optional reference for learners who choose external assessment.
 
-> Knowing what a security tool does is different from recognising when to use it, constructing the command and understanding the result.
+## Learning model
 
-The project is intended to help bridge the gap between guided, learn-by-doing platforms such as Boot.dev and the practical training currently available across the cybersecurity pathway. It provides a focused place to practise recalling commands and applying concepts without immediately relying on hints, walkthroughs or a live target.
+Every concept follows **1 Learn → 2 Observe → 3 Practice → 4 Reinforce → 5 Checkpoint**. Earlier knowledge should recur in later situations: navigating Linux supports file handling; permissions support least privilege; Python data handling supports automation; DNS and subnetting support investigation.
 
-**Project status:** Version 1 prototype  
-**Current coverage:** 40 scenarios  
-**Available levels:** Basic and Standard
+Start directly at a chosen area or take a short placement check based on your selected confidence. The app explains its recommendation and lets you confirm any available starting point. Placement never awards learning progress and a small sample cannot prove proficiency.
 
-## How It Works
+The design draws on the structure of the personal Obsidian Skills Concept Table: concept, branch, development stage, supporting evidence and next target. Personal scores and private learning records are not imported. The curriculum should eventually use prerequisite relationships and evidence to recommend the next useful concept rather than a sequence of isolated tool rooms.
 
-A training session can be configured around three choices:
+## Dashboard and proposed pathway
 
-1. Select one or more cybersecurity topics.
-2. Choose the difficulty level.
-3. Set a time limit for the session.
+Each tier has an icon and a red → amber → green progress bar. Shared concepts can contribute to multiple tiers. The current percentages use a fixed set of published starter concepts, including unseen concepts in the denominator. They measure activity completion, not knowledge confidence or likelihood of passing an exam. Higher-tier prerequisite progress is explicitly labelled; specialist content is not unlocked or claimed by completing basics.
 
-The application then presents practical questions in a simulated terminal. The learner enters the command they believe fits the scenario, receives immediate validation feedback and works through the selected question set before receiving a final score.
+| Tier | Current scope | Next development |
+| --- | --- | --- |
+| 🧱 Foundational Skills | Linux orientation, Python values, permissions | Shell/pipes, files, functions, Git, processes, troubleshooting |
+| 🛡️ Security Basics | Least privilege, hashing/integrity, DNS crossover | CIA, authentication, threats, controls, risk, logs and response |
+| 🌐 Network Basics | DNS records, IPv4 subnet scope, Python crossover | TCP/UDP, routing, switching, DHCP, VLANs and packet interpretation |
+| 🔎 Security Practitioner | Shared prerequisites only | Connected Security+/CCNA-informed investigations |
+| 🧭 Junior Pentester | Shared prerequisites only | Scoped enumeration, validation and reporting |
+| 📋 Registered Pentester pathway | Planned | Professional assessment methodology; no registration awarded |
+| ⚔️ Offensive Security | Planned | Controlled offensive investigations |
+| 🎯 Red Team Ops | Planned | Authorised operational scenarios |
+| 🧬 Exploit Developer | Planned | Specialist systems and exploit-development foundations |
 
-For example, a scenario might provide a target network and ask the learner to choose an appropriate discovery or enumeration command. The task is not simply to recognise the name of a tool—it is to recall the relevant syntax, flags and target format under light time pressure.
+These are learning areas, not a mandatory career ladder. Networking and security can develop alongside coding and system skills. Advanced areas remain future work. Initial development should stretch slightly beyond the owner's current Linux/Python/networking/security knowledge rather than attempt a complete professional curriculum.
 
-Commands entered into the application are **not executed**. Version 1 compares the supplied answer with validation rules stored alongside each scenario.
+## What works today
 
-## Training Topics
+- A dashboard with shared-concept progress across tiers.
+- Manual entry selection and an optional short placement check with user-confirmed recommendations.
+- Six starter concepts: Linux navigation, Python data, permissions, integrity, DNS and IPv4 subnet scope.
+- All five learning stages per starter concept; practical submissions are checked but never executed.
+- Local SQLite persistence for one personal learner, surviving app restarts and browser-session changes.
+- Security+ and CCNA starter relevance pages showing completed activities and unassessed evidence.
+- The original 40 Basic/Standard command scenarios remain available under **Command practice**.
 
-The current scenario library is divided into four selectable pathways:
+This is a small functional starter, not complete foundational, Security+ or CCNA courses. Original command exercises are retained as legacy practice rather than automatically counted as evidence on the new dashboard. Their simplified validation rules and content need further review.
 
-| Topic | Current focus |
-| --- | --- |
-| Security+ | Foundational security concepts and practical command awareness |
-| Offensive Security | Early offensive-security methodology and command selection |
-| Pentesting | Reconnaissance, enumeration and penetration-testing fundamentals |
-| Ethical Hacker | Broader practical security and ethical-hacking knowledge |
+## Evidence and certification coverage
 
-These pathways describe the direction of the training content. They are not official course material and the project is not affiliated with CompTIA, CREST, OffSec or Boot.dev.
+Opening a lesson or completing an activity does not demonstrate independent retention. Current records track stage completion only; they cannot detect AI assistance, looked-up answers or copied commands. Same-session reinforcement and checkpoints are starter exercises, not delayed assessments. Future evidence should distinguish exposure, assisted practice, unaided application, repeated interpretation and unfamiliar delayed checks.
 
-## Current Scenario Coverage
+Security+/CCNA relevance tags are provisional. They are not full official-objective mappings, exam weightings or endorsed preparation materials. Future coverage pages should use an explicitly versioned syllabus with per-objective mappings, evidence dates, gaps and next practice. No exam-pass estimate is produced. The legacy 80% results threshold is an app practice target only.
 
-Version 1 contains 40 scenarios:
+## Run locally
 
-| Difficulty | Security+ | Offensive Security | Pentesting | Ethical Hacker | Total |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Basic | 5 | 5 | 5 | 5 | 20 |
-| Standard | 5 | 5 | 5 | 5 | 20 |
-| Professional | Planned | Planned | Planned | Planned | 0 |
-
-The Professional tier represents a future CREST/OSCP-oriented stage. It is not populated in the current scenario library.
-
-## Session Timers
-
-Sessions can currently be set to:
-
-- 5 minutes
-- 10 minutes
-- 20 minutes
-- 30 minutes
-- 1 hour
-- 1 hour 30 minutes
-- 2 hours
-
-The shorter options support quick recall practice, while the longer sessions allow several topics to be combined into a broader knowledge check.
-
-## Getting Started
-
-### Requirements
-
-- Python 3.10 or later
-- Flask 3
-- PyCharm is optional but is the current development environment
-
-### Clone and Run
+Python 3.10+:
 
 ```bash
-git clone https://github.com/g5live/security-command-lab.git
-cd security-command-lab
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python sec-command.py
+python cyber-skills-path.py
 ```
 
-Open `http://127.0.0.1:5000` in a browser.
+Open http://127.0.0.1:5000. In PyCharm use this project's `.venv/bin/python` and run `cyber-skills-path.py`.
 
-The application generates a temporary session secret when it starts. To keep browser sessions valid across application restarts, provide your own secret:
-
-```bash
-SECRET_KEY="$(python -c 'import secrets; print(secrets.token_hex(32))')" python sec-command.py
-```
-
-Debug mode is disabled by default. It can be enabled for local development with `FLASK_DEBUG=1`; do not expose the development server to an untrusted network.
-
-On Windows, activate the virtual environment with:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-### Run in PyCharm
-
-1. Open the `security-command-lab` directory as a project.
-2. Select the Python interpreter inside `.venv`, or allow PyCharm to create a new virtual environment.
-3. Install Flask into that interpreter.
-4. Run `sec-command.py`.
-5. Open the local address shown in the Run window.
-
-## Run the Tests
-
-The regression tests use Python's built-in `unittest` framework, so no additional test package is required:
+A random browser-session secret is generated at startup unless `SECRET_KEY` is set. Learning records persist separately in ignored `progress.sqlite3`. Set `PROGRESS_DB` to use another writable SQLite file. The local database represents one learner shared by all browsers using this app; there are no user accounts or multi-user isolation. Keep the Flask development server local. Debug mode is opt-in with `FLASK_DEBUG=1`.
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-## Project Structure
+## Next implementation slices
 
-```text
-security-command-lab/
-├── core/
-│   └── engine.py          # Loads scenarios and validates submitted commands
-├── data/
-│   ├── ethical_hacker.json
-│   ├── offensive_security.json
-│   ├── pentesting.json
-│   └── security_plus.json
-├── templates/
-│   ├── index.html         # Scenario and simulated terminal view
-│   ├── menu.html          # Training-session configuration
-│   └── results.html       # Final score and session result
-├── tests/
-│   ├── test_app.py        # Flask route and session regression tests
-│   └── test_engine.py     # Scenario loading and validation tests
-├── requirements.txt       # Reproducible Python dependency versions
-└── sec-command.py         # Flask application and routes
-```
+1. Expand foundations: Linux orientation → files → permissions → processes → shell pipelines; Python values → collections → functions → files → small utilities. Add meaningful output interpretation and contextual feedback.
+2. Develop Security+ knowledge: controls, IAM, cryptography, logs, risk, incident response and governance. Connect foundational skills into practical reasoning.
+3. Develop CCNA knowledge: addressing, TCP/IP, DNS/DHCP, switching/routing, VLANs, access controls and automation. Use diagrams, packet traces and simulated outputs.
+4. Improve evidence: persist attempts, hints, assistance declarations and dates; add spaced revisits and unfamiliar checkpoints. Separate learning stage from demonstrated proficiency.
+5. Add versioned certification mappings and objective-gap views. Review the original command questions before incorporating them into evidence.
+6. Later add isolated, disposable practice environments and optional local environment verification. Installed software is not proof of skill or permission. Use explicitly scoped lab targets, controlled network access and resettable environments; do not execute learner code in the Flask process or expose a general-purpose host shell.
 
-## Current Limitations
+## Project structure
 
-- Only the Basic and Standard scenario tiers currently contain questions.
-- Validation checks for required or forbidden command components; it is not yet a full command parser.
-- Each scenario currently expects a single command rather than a connected investigation workflow.
-- Commands are simulated and are never passed to a system shell or external target.
-- Progress is stored only for the current browser session.
-- There are no user accounts, saved results or long-term progress statistics yet.
-- The application is currently intended for local development and learning use.
+- `cyber-skills-path.py`: Flask setup and retained command-practice routes.
+- `core/learning.py`: concept catalogue, starter mappings and SQLite progress.
+- `core/learning_routes.py`: dashboard, orientation, placement, lesson and coverage routes.
+- `data/learning.json`: six concept-led starter cycles.
+- `core/engine.py` and the original JSON files: legacy command practice.
+- `templates/`: learning views and original simulated terminal.
+- `tests/`: route, progress and scenario regressions.
 
-## Development Roadmap
-
-### Expand the Scenario Library
-
-Increase the library from 40 to 100 scenarios, with broader coverage across all four training topics and a more gradual progression in difficulty.
-
-### Add Multi-Stage Challenges
-
-Develop connected scenarios in which several actions form one overall investigation. A future challenge might require the learner to:
-
-1. Scan the target.
-2. Interpret the exposed services.
-3. Choose an enumeration route.
-4. Select the next command or tool.
-5. Work through a controlled exploitation or Meterpreter-style stage.
-
-This would reinforce methodology and decision-making rather than testing isolated command recall.
-
-### Introduce Different Environments
-
-Add visual and contextual variety to scenario presentation, including:
-
-- Linux terminals
-- Windows shells
-- Web pages and browser-based tasks
-- Tool-specific or application-specific interfaces
-- Investigation views that include output, logs or other evidence
-
-### Build a More Informative Application
-
-Develop the website beyond the current basic Flask interface with:
-
-- Clearer guidance and explanations
-- More detailed feedback after each answer
-- Scenario filters and session summaries
-- Progress and performance information
-- Improved navigation, accessibility and responsive presentation
-- Expanded test coverage, CSRF protection and deployment-ready configuration
-
-## Responsible Use
-
-Security Command Lab is designed for education and authorised practice. Any future exercises involving real tools or systems should only be performed against environments you own or have explicit permission to test.
-
-The aim is to build understanding—not just memorise commands—and to make the transition from theory to structured practical work less abrupt.
+No live target interaction, shell execution or attack-box provisioning is implemented.

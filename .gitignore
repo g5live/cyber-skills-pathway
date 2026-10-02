@@ -30,3 +30,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Local single-user learning records
+*.sqlite3
+*.sqlite3-*
