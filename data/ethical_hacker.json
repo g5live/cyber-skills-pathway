@@ -143,7 +143,7 @@
         "msfvenom"
       ],
       "hints": {
-        "-q": "Hint: The -q flag initializes the framework quietly, saving screen space."
+        "-q": "Hint: The -q flag initialises the framework quietly, saving screen space."
       }
     },
     "explanation": "msfconsole -q drops you directly into the Metasploit prompt, which is faster and cleaner for scripted or rapid engagements."
