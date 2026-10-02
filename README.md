@@ -4,7 +4,7 @@ A personal, concept-led learning application for building connected Linux, Pytho
 
 ## Learning model
 
-Every concept follows **1 Learn → 2 Observe → 3 Practice → 4 Reinforce → 5 Checkpoint**. Earlier knowledge should recur in later situations: navigating Linux supports file handling; permissions support least privilege; Python data handling supports automation; DNS and subnetting support investigation.
+Every concept follows **1 Learning → 2 Observing → 3 Practising → 4 Reinforcing → 5 Checking**. Earlier knowledge should recur in later situations: navigating Linux supports file handling; permissions support least privilege; Python data handling supports automation; DNS and subnetting support investigation.
 
 Start directly at a chosen area or take a short placement check based on your selected confidence. The app explains its recommendation and lets you confirm any available starting point. Placement never awards learning progress and a small sample cannot prove proficiency.
 
@@ -16,15 +16,15 @@ Each tier has an icon and a red → amber → green progress bar. Shared concept
 
 | Tier | Current scope | Next development |
 | --- | --- | --- |
-| 🧱 Foundational Skills | Linux orientation, Python values, permissions | Shell/pipes, files, functions, Git, processes, troubleshooting |
-| 🛡️ Security Basics | Least privilege, hashing/integrity, DNS crossover | CIA, authentication, threats, controls, risk, logs and response |
-| 🌐 Network Basics | DNS records, IPv4 subnet scope, Python crossover | TCP/UDP, routing, switching, DHCP, VLANs and packet interpretation |
-| 🔎 Security Practitioner | Shared prerequisites only | Connected Security+/CCNA-informed investigations |
-| 🧭 Junior Pentester | Shared prerequisites only | Scoped enumeration, validation and reporting |
-| 📋 Registered Pentester | Planned | Professional assessment methodology; no registration awarded |
-| ⚔️ Offensive Security | Planned | Controlled offensive investigations |
-| 🎯 Red Team Ops | Planned | Authorised operational scenarios |
-| 🧬 Exploit Developer | Planned | Specialist systems and exploit-development foundations |
+| 🧱 Foundational Skills | Eight concepts: Linux navigation/files, shell streams, processes, Python data/control flow/functions/files | Deeper shell fluency, Git, practical utilities and error handling |
+| 🛡️ Security Basics | Eight concepts: CIA, permissions, identity, MFA, phishing, integrity, risk, logs/recovery | Broader Security+ knowledge and connected evidence-led scenarios |
+| 🌐 Network Basics | Eight concepts: network roles, subnets, TCP/UDP, DNS, DHCP, gateways, HTTP/TLS, troubleshooting | Switching, routing, VLANs, packet interpretation and deeper CCNA learning |
+| 🔎 Security Practitioner | Evidence-led triage starter plus shared prerequisites | Connected investigations and proportionate response decisions |
+| 🧭 Junior Pentester | Scope-before-tools starter plus shared prerequisites | Scoped enumeration, validation and reporting |
+| 📋 Registered Pentester | Engagement-planning starter | Professional assessment methodology; no registration awarded |
+| ⚔️ Offensive Security | Trust-boundary reasoning starter | Controlled offensive investigations |
+| 🎯 Red Team Ops | Exercise-objectives starter | Authorised operational scenarios and debriefing |
+| 🧬 Exploit Developer | Input-bounds and failure-reasoning starter | Specialist systems and memory-model foundations |
 
 These are learning areas, not a mandatory career ladder. Networking and security can develop alongside coding and system skills. Each advanced area has an introductory concept; full specialist curricula remain future work. Initial development should stretch slightly beyond the owner's current Linux/Python/networking/security knowledge rather than attempt a complete professional curriculum.
 
@@ -38,7 +38,7 @@ These are learning areas, not a mandatory career ladder. Networking and security
 - Security+ and CCNA starter relevance pages showing completed activities and unassessed evidence.
 - Quickfire Reinforcement provides timed recall across all nine topics and five learning levels. The original 40 command scenarios remain archived in their JSON files.
 
-This is an expanded foundation library, not complete foundational, Security+ or CCNA courses. Original command exercises are retained as legacy practice rather than automatically counted as evidence on the new dashboard. Their simplified validation rules and content need further review.
+This is an expanded foundation library, not complete foundational, Security+ or CCNA courses. Original command exercises are retained as archived content rather than automatically counted as evidence on the new dashboard. Their simplified validation rules and content need further review.
 
 ## Evidence and certification coverage
 
@@ -67,12 +67,14 @@ python -m unittest discover -s tests -v
 
 ## Next implementation slices
 
-1. Expand foundations: Linux orientation → files → permissions → processes → shell pipelines; Python values → collections → functions → files → small utilities. Add meaningful output interpretation and contextual feedback.
+1. Deepen the existing foundations with connected Linux/Python tasks, small utilities, error handling and more demanding output interpretation.
 2. Develop Security+ knowledge: controls, IAM, cryptography, logs, risk, incident response and governance. Connect foundational skills into practical reasoning.
 3. Develop CCNA knowledge: addressing, TCP/IP, DNS/DHCP, switching/routing, VLANs, access controls and automation. Use diagrams, packet traces and simulated outputs.
 4. Improve evidence: persist attempts, hints, assistance declarations and dates; add spaced revisits and unfamiliar checkpoints. Separate learning stage from demonstrated proficiency.
 5. Add versioned certification mappings and objective-gap views. Review the original command questions before incorporating them into evidence.
-6. Later add isolated, disposable practice environments and optional local environment verification. Installed software is not proof of skill or permission. Use explicitly scoped lab targets, controlled network access and resettable environments; do not execute learner code in the Flask process or expose a general-purpose host shell.
+6. Later improve layout and menu navigation: consistent page structure, clear topic grouping, breadcrumbs, visible current topic/stage, predictable back/next controls, accessible keyboard/focus behaviour and responsive layouts. Keep starting-point selection, learning, coverage and Quickfire easy to distinguish. Review usability before adding more menu complexity.
+7. Later develop detailed skills pages for **all nine headings**: explain the area and intended outcomes, prerequisites, concepts and subskills, a recommended learning sequence, worked examples, practical use, links to related areas, completed activities, supporting evidence, gaps and next practice. Separate assisted exposure from independent application and retained understanding. Add versioned certification relevance where appropriate without implying certification, registration or a job qualification.
+8. Later add isolated, disposable practice environments and optional local environment verification. Installed software is not proof of skill or permission. Use explicitly scoped lab targets, controlled network access and resettable environments; do not execute learner code in the Flask process or expose a general-purpose host shell.
 
 ## Project structure
 
@@ -80,7 +82,7 @@ python -m unittest discover -s tests -v
 - `core/learning.py`: concept catalogue, starter mappings and SQLite progress.
 - `core/learning_routes.py`: dashboard, orientation, placement, lesson and coverage routes.
 - `data/learning.json`: 30 concept-led starter cycles.
-- `core/engine.py` and the original JSON files: legacy Quickfire Reinforcement.
+- `core/engine.py`: five-level Quickfire answer checking; the original JSON files retain archived command exercises.
 - `templates/`: learning views and original simulated terminal.
 - `tests/`: route, progress and scenario regressions.
 
@@ -107,3 +109,9 @@ Each dashboard heading opens its topic page. The six later topics now include on
 Quickfire Reinforcement uses the same concept library across all nine topics. Its five levels are Learning (with notes), Observing (with worked examples), Practising (practice questions), Reinforcing (different recall questions), and Checking (checkpoint questions). They are learning modes rather than professional difficulty ratings. Timers are 5, 10, 20, 30 or 60 minutes; longer values are rejected by the server. Quickfire completion does not advance persistent learning progress. The former command-practice URL remains a compatibility alias.
 
 UI prose uses UK English and pages declare en-GB. Executable commands, protocol names, programming keywords and CSS/API identifiers keep their required spelling.
+
+## Progress snapshot — 2 October 2026
+
+The application has moved from its original command-recall prototype to a concept-led personal learning app: nine clickable topic pages, 30 concepts/150 learning activities, persistent local progress, provisional Security+/CCNA relevance pages, and Quickfire Reinforcement across all nine topics and five levels. The current suite has 21 passing tests, including every topic/level combination and the 5–60-minute timer bounds.
+
+The topic pages are currently simple starter listings. Improved layout/navigation and comprehensive informative skills pages are deliberately recorded as later-stage work above, not features already delivered. Advanced topics contain introductory primers only. Progress bars record starter activity completion; they are not mastery or exam-readiness scores.
