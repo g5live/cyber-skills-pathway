@@ -70,3 +70,13 @@ def cards(records):
         result.append(dict(key=key, icon=icon, title=title, planned=planned,
                            percent=coverage(records, mapped), count=len(mapped)))
     return result
+
+
+def matches_answer(item, stage, answer):
+    key = {3: 'answer', 4: 'reinforce_answer', 5: 'checkpoint_answer'}[stage]
+    candidate = ' '.join(answer.strip().split())
+    expected = ' '.join(item[key].strip().split())
+    if not item.get('case_sensitive', False):
+        candidate, expected = candidate.casefold(), expected.casefold()
+    alternatives = item.get(key + '_alternatives', [])
+    return candidate == expected or any(candidate == (' '.join(value.split()) if item.get('case_sensitive') else ' '.join(value.split()).casefold()) for value in alternatives)

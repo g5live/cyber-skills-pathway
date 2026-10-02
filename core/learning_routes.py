@@ -1,7 +1,7 @@
 import hmac
 import secrets
-from flask import Blueprint, current_app, render_template, request, redirect, url_for, session, abort
-from core.learning import lessons, progress, advance, cards, preference, coverage, STAGES
+from flask import Blueprint, current_app, render_template, request, redirect, url_for, session, abort, flash
+from core.learning import lessons, progress, advance, cards, preference, coverage, STAGES, matches_answer
 
 learning = Blueprint('learning', __name__)
 PATHS = ('foundations', 'security', 'network')
@@ -55,14 +55,14 @@ def placement():
     if selected not in PATHS:
         abort(400)
     # A small sample informs entry advice, never progress or certification scores.
-    sample = [item for item in lessons() if item['path'] in ('foundations', selected)]
+    sample = [item for item in lessons() if item['id'] in ('linux-navigation', 'python-data', 'permissions', 'integrity', 'dns', 'subnets') and item['path'] in ('foundations', selected)]
     recommendation = None
     if request.method == 'POST':
-        correct = sum(request.form.get(item['id'], '').strip().casefold() == item['answer'].casefold() for item in sample)
+        correct = sum(matches_answer(item, 3, request.form.get(item['id'], '')) for item in sample)
         recommendation = selected if correct >= len(sample) - 1 else 'foundations'
         if selected == 'foundations' and correct == len(sample):
             recommendation = 'security'
-        gaps = [item['title'] for item in sample if request.form.get(item['id'], '').strip().casefold() != item['answer'].casefold()]
+        gaps = [item['title'] for item in sample if not matches_answer(item, 3, request.form.get(item['id'], ''))]
         return render_template('placement.html', sample=sample, selected=selected, recommendation=recommendation,
                                correct=correct, gaps=gaps)
     return render_template('placement.html', sample=sample, selected=selected, recommendation=None)
@@ -80,11 +80,20 @@ def lesson(concept):
         if request.form.get('stage') != str(stage) or completed == 5:
             abort(400, 'This stage has already changed. Reload the lesson.')
         answer_key = {3: 'answer', 4: 'reinforce_answer', 5: 'checkpoint_answer'}.get(stage)
-        if answer_key and request.form.get('answer', '').strip().casefold() != item[answer_key].casefold():
-            message = 'That answer does not match this exercise. Revisit the explanation and try again; this is practice, not a pass/fail judgement.'
+        if answer_key and not matches_answer(item, stage, request.form.get('answer', '')):
+            message = 'Not quite. Review the lesson notes below and trace the example before trying again.'
         elif advance(database(), concept, stage):
+            if answer_key:
+                prefix = {3: 'practice', 4: 'reinforce', 5: 'checkpoint'}[stage]
+                flash(item[prefix + '_feedback'], 'learning')
             return redirect(url_for('learning.lesson', concept=concept))
-    return render_template('learning_lesson.html', lesson=item, stage=stage, completed=completed, message=message)
+    content = lessons()
+    related = [entry for entry in content if entry['id'] in item.get('prerequisites', [])]
+    sequence = [entry for entry in content if entry['path'] == item['path']]
+    index = next(i for i, entry in enumerate(sequence) if entry['id'] == concept)
+    next_lesson = sequence[index + 1] if index + 1 < len(sequence) else None
+    return render_template('learning_lesson.html', lesson=item, stage=stage, completed=completed,
+                           message=message, related=related, next_lesson=next_lesson)
 
 
 @learning.route('/coverage/<exam>')

@@ -32,13 +32,13 @@ These are learning areas, not a mandatory career ladder. Networking and security
 
 - A dashboard with shared-concept progress across tiers.
 - Manual entry selection and an optional short placement check with user-confirmed recommendations.
-- Six starter concepts: Linux navigation, Python data, permissions, integrity, DNS and IPv4 subnet scope.
+- 24 starter concepts across three areas, with suggested preparation links, worked examples, answer explanations and next-lesson navigation.
 - All five learning stages per starter concept; practical submissions are checked but never executed.
 - Local SQLite persistence for one personal learner, surviving app restarts and browser-session changes.
 - Security+ and CCNA starter relevance pages showing completed activities and unassessed evidence.
 - The original 40 Basic/Standard command scenarios remain available under **Command practice**.
 
-This is a small functional starter, not complete foundational, Security+ or CCNA courses. Original command exercises are retained as legacy practice rather than automatically counted as evidence on the new dashboard. Their simplified validation rules and content need further review.
+This is an expanded foundation library, not complete foundational, Security+ or CCNA courses. Original command exercises are retained as legacy practice rather than automatically counted as evidence on the new dashboard. Their simplified validation rules and content need further review.
 
 ## Evidence and certification coverage
 
@@ -79,9 +79,23 @@ python -m unittest discover -s tests -v
 - `cyber-skills-path.py`: Flask setup and retained command-practice routes.
 - `core/learning.py`: concept catalogue, starter mappings and SQLite progress.
 - `core/learning_routes.py`: dashboard, orientation, placement, lesson and coverage routes.
-- `data/learning.json`: six concept-led starter cycles.
+- `data/learning.json`: 24 concept-led starter cycles.
 - `core/engine.py` and the original JSON files: legacy command practice.
 - `templates/`: learning views and original simulated terminal.
 - `tests/`: route, progress and scenario regressions.
 
 No live target interaction, shell execution or attack-box provisioning is implemented.
+
+## Foundation library
+
+| Area | Suggested lesson sequence |
+| --- | --- |
+| Foundational Skills | Linux navigation → files and paths → pipes/redirection → processes/services → Python data → conditions/loops → functions → files/environments |
+| Security Basics | CIA objectives → permissions → authentication/authorisation → passwords/MFA → phishing → hashes/integrity → threats/risk/controls → logs/recovery |
+| Network Basics | Hosts/switches/routers → IPv4 subnet scope → TCP/UDP/ports → DNS → DHCP → gateways → HTTP/TLS → evidence-led troubleshooting |
+
+Every lesson includes Learn/Observe material and three applied checks, for 120 learning activities across the library. Prerequisites are recommendations, not locks. Successful checks explain why the answer fits; notes remain available for assisted practice. Text answers support whitespace normalisation and case-insensitive concept terms; commands and paths retain case sensitivity. This is still bounded answer checking, not semantic evaluation of free-form explanations.
+
+The quick placement check intentionally retains its original two-to-four-question sample rather than expanding into a full course test. Existing concept IDs and database records remain valid. Adding material expands the progress denominator: percentages can decrease while completed activities stay unchanged. That reflects curriculum coverage, not loss of ability.
+
+Technical further-reading links are included where appropriate, using the GNU Bash manual, Python tutorial, CISA/NIST guidance and IETF protocol specifications. Examples use simulated systems and documentation addresses; no submissions are executed.

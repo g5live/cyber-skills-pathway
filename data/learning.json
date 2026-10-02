@@ -16,7 +16,122 @@
     "reinforce": "You are in /home/learner/labs/samples. Enter a command to move up one directory.",
     "reinforce_answer": "cd ..",
     "checkpoint": "You are somewhere unfamiliar. Enter a command to move directly to /tmp using an absolute path.",
-    "checkpoint_answer": "cd /tmp"
+    "checkpoint_answer": "cd /tmp",
+    "prerequisites": [],
+    "takeaways": [
+      "Use pwd to confirm your working directory.",
+      "Absolute paths begin with /; .. selects the parent."
+    ],
+    "connection": "Navigation is the starting point for organising evidence and understanding script file paths.",
+    "minutes": 6,
+    "sources": [],
+    "practice_feedback": "pwd displays your current working directory without changing it.",
+    "reinforce_feedback": "cd .. changes to the parent of your working directory.",
+    "checkpoint_feedback": "/tmp is an absolute path, so this does not depend on where you started.",
+    "case_sensitive": true
+  },
+  {
+    "id": "linux-files",
+    "title": "Linux: files, paths and careful changes",
+    "path": "foundations",
+    "tiers": [
+      "foundations",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "linux-navigation"
+    ],
+    "learn": "Files hold data; directories organise entries. Relative paths start from your working directory. mkdir creates a directory; cp copies a file; mv moves or renames it. Quoting a path containing spaces keeps it as one argument. Before changing a file, confirm your location and inspect what already exists. Copying onto an existing destination can overwrite data; removing a file is not a backup strategy.",
+    "observe": "$ pwd\n/home/learner/labs\n$ mkdir evidence\n$ cp notes.txt evidence/notes-copy.txt\n$ ls evidence\nnotes-copy.txt\n# notes.txt still exists in the working directory.",
+    "takeaways": [
+      "Distinguish copying from moving.",
+      "Check destinations before overwriting."
+    ],
+    "connection": "Organised evidence makes later log analysis and incident reporting reproducible.",
+    "minutes": 8,
+    "practice": "Using mkdir, create a directory named reports in the current directory.",
+    "answer": "mkdir reports",
+    "practice_feedback": "mkdir creates a directory relative to your current location.",
+    "reinforce": "Using cp, copy notes.txt to backup.txt in the same directory.",
+    "reinforce_answer": "cp notes.txt backup.txt",
+    "reinforce_feedback": "The first path is the source and the second is the destination; the source remains.",
+    "checkpoint": "Using mv, rename draft.txt to final.txt in the current directory.",
+    "checkpoint_answer": "mv draft.txt final.txt",
+    "checkpoint_feedback": "mv changes the name/location rather than making a second copy. Check that final.txt is not an existing file.",
+    "sources": [],
+    "case_sensitive": true
+  },
+  {
+    "id": "shell-streams",
+    "title": "Shell: pipes, output and redirection",
+    "path": "foundations",
+    "tiers": [
+      "foundations",
+      "practitioner"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "linux-files"
+    ],
+    "learn": "Programs commonly read standard input and write standard output; errors use standard error. A pipe (|) passes standard output to the next program. > writes output to a file and normally replaces its contents; >> appends. grep selects matching lines. A normal pipe does not include standard error. Read a pipeline from left to right and predict what each step contributes before using it.",
+    "observe": "$ printf \"INFO started\\nERROR timeout\\n\" | grep ERROR\nERROR timeout\n$ printf \"reviewed\\n\" >> notes.txt\n# The new line is appended; existing notes are retained.",
+    "takeaways": [
+      "A pipe connects programs; redirection connects a stream to a file.",
+      "Standard output and standard error are different streams."
+    ],
+    "connection": "Filtering logs is useful in both network troubleshooting and security investigations.",
+    "minutes": 8,
+    "practice": "Which operator appends output to a file: > or >>?",
+    "answer": ">>",
+    "practice_feedback": ">> appends, whereas > normally truncates an existing destination.",
+    "reinforce": "Using grep, select lines containing ERROR from app.log.",
+    "reinforce_answer": "grep ERROR app.log",
+    "reinforce_feedback": "grep filters matching lines; its usual pattern matching is case-sensitive.",
+    "checkpoint": "Would appending with >> normally erase the existing contents? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "Append redirection keeps existing bytes and writes new output after them.",
+    "sources": [
+      {
+        "title": "Bash redirections",
+        "url": "https://www.gnu.org/software/bash/manual/html_node/Redirections.html"
+      }
+    ],
+    "case_sensitive": true
+  },
+  {
+    "id": "linux-processes",
+    "title": "Linux: processes, services and inspection",
+    "path": "foundations",
+    "tiers": [
+      "foundations",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "linux-navigation"
+    ],
+    "learn": "A process is a running program instance with a process ID (PID). A service is a managed background function; it can involve one or more processes. ps displays processes and systemctl inspects services on systems using systemd. Start with read-only inspection. An active service is not proof that a remote client can reach it: bindings, routes and firewall rules also matter. Avoid restarting or killing a process before understanding its role.",
+    "observe": "$ ps -p 412 -o pid,comm\n PID COMMAND\n 412 python\n$ systemctl is-active sshd\nactive\n# Illustrative systemd output; service names vary by distribution.",
+    "takeaways": [
+      "Inspect before changing a running system.",
+      "Service state and network reachability are separate questions."
+    ],
+    "connection": "This distinction supports troubleshooting before assuming an outage is an attack.",
+    "minutes": 8,
+    "practice": "In this output, PID 412 belongs to python. What is the process ID?",
+    "answer": "412",
+    "practice_feedback": "A PID identifies a running process instance; it is not a port number.",
+    "reinforce": "Using systemctl is-active, inspect the sshd service.",
+    "reinforce_answer": "systemctl is-active sshd",
+    "reinforce_feedback": "is-active checks state without restarting the service.",
+    "checkpoint": "Does an active service guarantee remote access? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "A running service can still be unreachable because of its listening address, routing or firewall rules.",
+    "sources": [],
+    "case_sensitive": true
   },
   {
     "id": "python-data",
@@ -37,7 +152,169 @@
     "reinforce": "For ports = [22, 80, 443], what value does ports[1] produce? Indexes begin at zero.",
     "reinforce_answer": "80",
     "checkpoint": "For result = {\"status\": \"closed\", \"port\": 443}, what value does result[\"status\"] produce?",
-    "checkpoint_answer": "closed"
+    "checkpoint_answer": "closed",
+    "prerequisites": [],
+    "takeaways": [
+      "Dictionary keys retrieve named values.",
+      "List indexes begin at zero."
+    ],
+    "connection": "Dictionaries can represent devices or event records; lists collect many records.",
+    "minutes": 6,
+    "sources": [
+      {
+        "title": "Python tutorial",
+        "url": "https://docs.python.org/3/tutorial/"
+      }
+    ],
+    "practice_feedback": "The port key maps to the integer 22.",
+    "reinforce_feedback": "Index 1 is the second item: 80.",
+    "checkpoint_feedback": "The status key retrieves the string closed; port is a different key.",
+    "case_sensitive": false
+  },
+  {
+    "id": "python-control",
+    "title": "Python: comparisons, conditions and loops",
+    "path": "foundations",
+    "tiers": [
+      "foundations",
+      "practitioner"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "python-data"
+    ],
+    "learn": "A condition chooses which branch runs. == compares values; = assigns a value. Indentation groups Python statements. A for loop visits each item in a collection. Keep track of variables as you trace an example: which values make the condition true, and what changes inside that branch? Predict output before running code. Here the application checks your prediction without executing Python submissions.",
+    "observe": "count = 0\nfor port in [22, 80, 443]:\n    if port > 100:\n        count = count + 1\nprint(count)\n# Output: 1",
+    "takeaways": [
+      "Trace each iteration and condition.",
+      "Indentation determines which statements belong to a branch."
+    ],
+    "connection": "Conditions help select interesting records from logs and device inventories.",
+    "minutes": 8,
+    "practice": "What does 22 == 22 evaluate to? Answer True or False.",
+    "answer": "True",
+    "practice_feedback": "== compares the values; both sides are 22.",
+    "reinforce": "How many values in [21, 22, 80] satisfy port < 30?",
+    "reinforce_answer": "2",
+    "reinforce_feedback": "21 and 22 meet the condition; 80 does not.",
+    "checkpoint": "A counter starts at 0. For each number in [2, 5, 8], add 1 only when number > 4. What is the final counter?",
+    "checkpoint_answer": "2",
+    "checkpoint_feedback": "Only 5 and 8 enter the branch, so two increments occur.",
+    "sources": [
+      {
+        "title": "Python tutorial",
+        "url": "https://docs.python.org/3/tutorial/"
+      }
+    ],
+    "case_sensitive": false
+  },
+  {
+    "id": "python-functions",
+    "title": "Python: functions, return values and reuse",
+    "path": "foundations",
+    "tiers": [
+      "foundations",
+      "practitioner"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "python-control"
+    ],
+    "learn": "A function names a reusable operation. Parameters receive inputs when the function is called. return sends a result back to the caller; print displays text. A function that reaches its end without return yields None. Keep calculation separate from display so the result can be tested or used elsewhere. Trace a call by substituting its arguments into the function body.",
+    "observe": "def host_count(network_bits):\n    return 32 - network_bits\n\nbits = host_count(24)\nprint(bits)\n# Output: 8",
+    "takeaways": [
+      "A returned value can feed another operation.",
+      "Displayed output and a return value are distinct."
+    ],
+    "connection": "Reusable functions support small security utilities without mixing calculation and user interface.",
+    "minutes": 8,
+    "practice": "For def twice(value): return value * 2, what does twice(6) return?",
+    "answer": "12",
+    "practice_feedback": "The parameter receives 6 and the return expression computes 6 × 2.",
+    "reinforce": "Which keyword sends a value back to the caller: print or return?",
+    "reinforce_answer": "return",
+    "reinforce_feedback": "return passes a result to the caller; print only displays output.",
+    "checkpoint": "A function only calls print(\"done\") and has no return statement. What value does calling it return?",
+    "checkpoint_answer": "None",
+    "checkpoint_feedback": "The text is displayed, but the implicit return value is None.",
+    "sources": [
+      {
+        "title": "Python tutorial",
+        "url": "https://docs.python.org/3/tutorial/"
+      }
+    ],
+    "case_sensitive": false
+  },
+  {
+    "id": "python-files",
+    "title": "Python: reading files and understanding environments",
+    "path": "foundations",
+    "tiers": [
+      "foundations",
+      "practitioner"
+    ],
+    "exams": [],
+    "prerequisites": [
+      "python-functions",
+      "linux-files"
+    ],
+    "learn": "with open(path, \"r\", encoding=\"utf-8\") opens a text file for reading and closes it when the block finishes. A relative file path is resolved from the process working directory, not automatically from the script directory. FileNotFoundError means the requested path could not be found. Packages are installed for a particular interpreter: a virtual environment can contain Flask while system Python does not. Check paths and interpreter selection before reinstalling everything.",
+    "observe": "with open(\"events.txt\", \"r\", encoding=\"utf-8\") as source:\n    lines = source.readlines()\nprint(len(lines))\n# If events.txt contains three lines, output is 3.\n# Run with the interpreter belonging to your project environment.",
+    "takeaways": [
+      "Confirm working directory for relative file paths.",
+      "Use the project interpreter for its installed packages."
+    ],
+    "connection": "Reliable file handling connects scripts with evidence files and avoids environment-related failures.",
+    "minutes": 8,
+    "practice": "A file contains three lines. After readlines(), what is len(lines)?",
+    "answer": "3",
+    "practice_feedback": "readlines returns the lines as a list.",
+    "reinforce": "With working directory /tmp/lab, which absolute path does open(\"events.txt\") request?",
+    "reinforce_answer": "/tmp/lab/events.txt",
+    "reinforce_feedback": "Relative paths use the process working directory.",
+    "checkpoint": "Flask imports in .venv/bin/python but not system Python. Should you first check interpreter selection? Answer yes or no.",
+    "checkpoint_answer": "yes",
+    "checkpoint_feedback": "Each interpreter has its own package environment; selecting the installed environment addresses this mismatch.",
+    "sources": [
+      {
+        "title": "Python tutorial",
+        "url": "https://docs.python.org/3/tutorial/"
+      }
+    ],
+    "case_sensitive": true
+  },
+  {
+    "id": "cia",
+    "title": "Security: confidentiality, integrity and availability",
+    "path": "security",
+    "tiers": [
+      "security",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "security_plus"
+    ],
+    "prerequisites": [],
+    "learn": "Confidentiality controls who may see information. Integrity concerns whether information has been altered improperly. Availability concerns access when needed. A single incident can affect more than one objective: ransomware may disrupt access and alter files, while an exposed backup can reveal private data. Identify the consequence before choosing a control. Backups aid recovery; permissions limit access; hashes can support integrity comparison against trusted references.",
+    "observe": "Event: payroll records sent to the wrong recipient.\nPrimary concern: confidentiality.\nEvent: a stored total changes unexpectedly.\nPrimary concern: integrity.\nEvent: a service cannot be used.\nPrimary concern: availability.",
+    "takeaways": [
+      "Classify the impact before selecting a control.",
+      "One event can affect multiple security objectives."
+    ],
+    "connection": "These objectives give meaning to permissions, hashes, backups and network resilience.",
+    "minutes": 8,
+    "practice": "Private records are disclosed to an unauthorised reader. Name the primary CIA objective affected.",
+    "answer": "confidentiality",
+    "practice_feedback": "The immediate consequence is disclosure to someone who should not see the information.",
+    "reinforce": "An attacker changes an invoice amount. Name the primary CIA objective affected.",
+    "reinforce_answer": "integrity",
+    "reinforce_feedback": "The invoice contents were altered improperly.",
+    "checkpoint": "A disruption prevents users from accessing an otherwise unchanged service. Name the primary CIA objective affected.",
+    "checkpoint_answer": "availability",
+    "checkpoint_feedback": "The stated issue is loss of access, not necessarily disclosure or alteration.",
+    "sources": [],
+    "case_sensitive": false
   },
   {
     "id": "permissions",
@@ -59,7 +336,138 @@
     "reinforce": "What does the owner digit 4 allow? Answer read, write or execute.",
     "reinforce_answer": "read",
     "checkpoint": "A report should be readable/writable by its owner and readable by its group, with no access for others. Give its octal permission.",
-    "checkpoint_answer": "640"
+    "checkpoint_answer": "640",
+    "prerequisites": [
+      "linux-files",
+      "cia"
+    ],
+    "takeaways": [
+      "Octal digits separate owner, group and others.",
+      "Add read=4, write=2 and execute=1 within each digit."
+    ],
+    "connection": "Local access controls give a concrete example of least privilege.",
+    "minutes": 6,
+    "sources": [],
+    "practice_feedback": "Owner read/write is 4+2=6; group and others receive 0.",
+    "reinforce_feedback": "The value 4 grants read only.",
+    "checkpoint_feedback": "Owner read/write is 6, group read is 4, and others have 0: 640.",
+    "case_sensitive": false
+  },
+  {
+    "id": "identity",
+    "title": "Security: authentication and authorisation",
+    "path": "security",
+    "tiers": [
+      "security",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "security_plus"
+    ],
+    "prerequisites": [
+      "cia",
+      "permissions"
+    ],
+    "learn": "Authentication checks a claimed identity; authorisation determines the actions that identity may take. Logging in successfully should not grant access to every record. Least privilege narrows permissions to the task. Separate user accounts make activity attributable and limit shared access. When investigating denied access, distinguish a rejected login from an authenticated user who lacks permission. Verify a specific permission rather than assuming membership of one group grants all rights.",
+    "observe": "Login: accepted for user alex.\nRead own profile: allowed.\nRead payroll database: denied.\nAuthentication succeeded; the payroll authorisation check did not allow access.",
+    "takeaways": [
+      "A successful login does not imply unrestricted access.",
+      "Use narrowly scoped permissions."
+    ],
+    "connection": "Identity reasoning supports both local permissions and network service access.",
+    "minutes": 8,
+    "practice": "Which process checks a claimed identity: authentication or authorisation?",
+    "answer": "authentication",
+    "practice_feedback": "Authentication establishes confidence in the claimed identity.",
+    "reinforce": "A logged-in user cannot read payroll. Is this primarily an authentication or authorisation decision?",
+    "reinforce_answer": "authorisation",
+    "reinforce_feedback": "The user is already authenticated; access to that resource is being checked.",
+    "checkpoint": "Should a reporting account receive unrestricted administrator rights just to read one report? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "Least privilege grants the specific access needed rather than unrestricted administration.",
+    "sources": [],
+    "case_sensitive": false
+  },
+  {
+    "id": "mfa",
+    "title": "Security: passwords and multifactor authentication",
+    "path": "security",
+    "tiers": [
+      "security",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "security_plus"
+    ],
+    "prerequisites": [
+      "identity"
+    ],
+    "learn": "Use distinct passwords so exposure from one service does not unlock another; a password manager can help maintain them. Authentication factors include something known, possessed or inherent, such as a password, security key or biometric. Two passwords are still the same factor category. MFA adds protection but does not make every login safe: users can be tricked into approving requests or sharing codes. Prefer phishing-resistant options where available and reject unexpected prompts.",
+    "observe": "Password + PIN: two knowledge secrets, one factor category.\nPassword + security key: knowledge plus possession.\nUnexpected approval prompt: do not approve it merely to make it disappear.",
+    "takeaways": [
+      "Count factor categories, not the number of prompts.",
+      "Unexpected prompts need investigation."
+    ],
+    "connection": "Stronger identity checks complement permissions; they do not replace authorisation.",
+    "minutes": 8,
+    "practice": "Are a password and PIN two different factor categories? Answer yes or no.",
+    "answer": "no",
+    "practice_feedback": "Both are knowledge factors.",
+    "reinforce": "A hardware security key is something you know, have or are. Answer know, have or are.",
+    "reinforce_answer": "have",
+    "reinforce_feedback": "Possession of the key is the factor category.",
+    "checkpoint": "Should you approve an MFA request you did not initiate? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "An unsolicited request may indicate attempted account misuse.",
+    "sources": [
+      {
+        "title": "CISA: multifactor authentication",
+        "url": "https://www.cisa.gov/audiences/small-and-medium-businesses/secure-your-business/require-multifactor-authentication"
+      }
+    ],
+    "case_sensitive": false
+  },
+  {
+    "id": "phishing",
+    "title": "Security: phishing and independent verification",
+    "path": "security",
+    "tiers": [
+      "security",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "security_plus"
+    ],
+    "prerequisites": [
+      "identity"
+    ],
+    "learn": "Phishing tries to influence a person into disclosing information or taking an unsafe action. Requests may create urgency, imitate a known contact or link to a convincing sign-in page. Good grammar and familiar branding do not establish legitimacy. Verify unexpected sensitive requests through a channel you already trust, rather than contact details supplied in the message. Report suspicious messages through the appropriate process, and avoid opening an attachment just to investigate it.",
+    "observe": "Message: \"Your payroll account expires in 10 minutes. Sign in here.\"\nSafer response: use the bookmarked payroll site or established support channel.\nThe message appearance alone is not reliable evidence.",
+    "takeaways": [
+      "Urgency is a reason to slow down and verify.",
+      "Verification must be independent of the suspicious message."
+    ],
+    "connection": "Human verification protects credentials and complements technical authentication controls.",
+    "minutes": 8,
+    "practice": "Does a familiar company logo prove an email is genuine? Answer yes or no.",
+    "answer": "no",
+    "practice_feedback": "Branding can be copied; it does not authenticate the sender.",
+    "reinforce": "For an unexpected payment request, choose independent verification or immediate payment.",
+    "reinforce_answer": "independent verification",
+    "reinforce_feedback": "Confirm using an established channel rather than information supplied by the request.",
+    "checkpoint": "Should you open an unexpected attachment solely to see whether it is malicious? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "Opening it may trigger unsafe behaviour; use the approved reporting process.",
+    "sources": [
+      {
+        "title": "NIST: phishing",
+        "url": "https://www.nist.gov/itl/smallbusinesscyber/guidance-topic/phishing"
+      }
+    ],
+    "case_sensitive": false
   },
   {
     "id": "integrity",
@@ -80,7 +488,202 @@
     "reinforce": "Does a matching hash from an untrusted source prove a file is safe? Answer yes or no.",
     "reinforce_answer": "no",
     "checkpoint": "A file has a different SHA-256 digest from your trusted reference. Is its integrity confirmed? Answer yes or no.",
-    "checkpoint_answer": "no"
+    "checkpoint_answer": "no",
+    "prerequisites": [
+      "linux-files",
+      "cia"
+    ],
+    "takeaways": [
+      "Use a trusted reference for integrity comparison.",
+      "Hash agreement is not a malware safety verdict."
+    ],
+    "connection": "Integrity checks and careful file handling support evidence preservation.",
+    "minutes": 6,
+    "sources": [],
+    "practice_feedback": "sha256sum calculates a SHA-256 digest of the named file.",
+    "reinforce_feedback": "An untrusted reference can be manipulated alongside the file.",
+    "checkpoint_feedback": "A mismatch means the bytes do not agree with that reference; investigate the difference.",
+    "case_sensitive": true
+  },
+  {
+    "id": "risk-controls",
+    "title": "Security: threats, vulnerabilities and controls",
+    "path": "security",
+    "tiers": [
+      "security",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "security_plus"
+    ],
+    "prerequisites": [
+      "cia"
+    ],
+    "learn": "A threat is a potential cause of harm; a vulnerability is a weakness that may be exploited. Risk considers likelihood and impact in context. An exposed outdated service is not the same thing as a confirmed compromise. Controls reduce risk: patching addresses known weaknesses, filtering narrows exposure, and monitoring helps detect concerning events. No single control removes all risk. Assess the asset and consequence before deciding what to prioritise.",
+    "observe": "Asset: customer records.\nWeakness: an unpatched internet-facing service.\nThreat: someone exploiting the weakness.\nPotential impact: disclosure or interruption.\nControls: patch, reduce exposure, monitor and verify.",
+    "takeaways": [
+      "Separate weakness, possible harm and observed incident.",
+      "Choose controls based on context."
+    ],
+    "connection": "This helps turn network observations into proportionate security decisions.",
+    "minutes": 8,
+    "practice": "An unpatched software flaw is a threat or vulnerability?",
+    "answer": "vulnerability",
+    "practice_feedback": "The flaw is a weakness; an actor exploiting it is a threat scenario.",
+    "reinforce": "Does finding a vulnerability by itself prove it was exploited? Answer yes or no.",
+    "reinforce_answer": "no",
+    "reinforce_feedback": "Evidence of the weakness is separate from evidence of compromise.",
+    "checkpoint": "Should prioritisation consider both likelihood and impact? Answer yes or no.",
+    "checkpoint_answer": "yes",
+    "checkpoint_feedback": "A consequence can be serious even when exploitation likelihood differs between environments.",
+    "sources": [],
+    "case_sensitive": false
+  },
+  {
+    "id": "logs-recovery",
+    "title": "Security: logs, evidence and recovery",
+    "path": "security",
+    "tiers": [
+      "security",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "security_plus"
+    ],
+    "prerequisites": [
+      "shell-streams",
+      "integrity",
+      "risk-controls"
+    ],
+    "learn": "Logs record events from a system or application, but one line rarely explains an incident. Compare timestamps, accounts and related events; check time zones and missing data. Preserve original evidence and analyse a copy where practical. Backups help restore data only if they are usable, appropriately protected and tested. A completed backup job is not a demonstrated restore. Recovery plans need to account for data age and service dependencies.",
+    "observe": "10:01 user=alex login=failed\n10:02 user=alex login=failed\n10:03 user=alex login=success\n# Could reflect a typing error or misuse; correlate before concluding.\nBackup job: completed. Restore test: not yet performed.",
+    "takeaways": [
+      "An observation is evidence, not a complete conclusion.",
+      "Verify recovery through a restore test."
+    ],
+    "connection": "File handling, filtering and integrity checks support careful incident investigation.",
+    "minutes": 8,
+    "practice": "Do two failed logins alone prove an account was compromised? Answer yes or no.",
+    "answer": "no",
+    "practice_feedback": "The events need context and corroboration.",
+    "reinforce": "For investigation, should you preserve or overwrite the original log? Answer preserve or overwrite.",
+    "reinforce_answer": "preserve",
+    "reinforce_feedback": "Preservation supports later comparison and review.",
+    "checkpoint": "Does a completed backup job prove successful restoration? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "Restoration needs to be tested; job completion alone is not sufficient.",
+    "sources": [],
+    "case_sensitive": false
+  },
+  {
+    "id": "network-model",
+    "title": "Networks: hosts, switches and routers",
+    "path": "network",
+    "tiers": [
+      "network",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "ccna"
+    ],
+    "prerequisites": [],
+    "learn": "A host sends or receives network traffic. A switch commonly forwards Ethernet frames within a local network using MAC addresses. A router forwards IP packets between networks using routing information. An IP address identifies an interface at the network layer; a MAC address is used on the local link. A home device may combine routing, switching and wireless functions, so physical appearance does not identify a single role.",
+    "observe": "Laptop → local switch → router → another IP network\nLocal Ethernet delivery: destination MAC address.\nRouting between networks: destination IP and routing table.",
+    "takeaways": [
+      "Distinguish a device from the roles it implements.",
+      "Local delivery and between-network routing are different operations."
+    ],
+    "connection": "This sets up subnet decisions and default-gateway troubleshooting.",
+    "minutes": 8,
+    "practice": "Which role forwards packets between IP networks: switch or router?",
+    "answer": "router",
+    "practice_feedback": "A router chooses a next hop between networks.",
+    "reinforce": "On an Ethernet link, frames use IP or MAC addresses for local delivery?",
+    "reinforce_answer": "MAC",
+    "reinforce_feedback": "Ethernet frames carry link-layer MAC addresses.",
+    "checkpoint": "Can one home device combine switching and routing functions? Answer yes or no.",
+    "checkpoint_answer": "yes",
+    "checkpoint_feedback": "A physical device can provide several logical functions.",
+    "sources": [],
+    "case_sensitive": false
+  },
+  {
+    "id": "subnets",
+    "title": "IPv4: addresses and subnet scope",
+    "path": "network",
+    "tiers": [
+      "network",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "ccna"
+    ],
+    "learn": "An IPv4 address has 32 bits. A /24 prefix uses 24 network bits and leaves 8 host bits: 256 addresses. In a conventional IPv4 /24 subnet, one address is the network identifier and one is broadcast, leaving 254 usable host addresses.",
+    "observe": "192.0.2.0/24\nNetwork: 192.0.2.0\nHosts: 192.0.2.1–192.0.2.254\nBroadcast: 192.0.2.255",
+    "practice": "How many host bits remain in an IPv4 /24?",
+    "answer": "8",
+    "reinforce": "How many usable host addresses are in a conventional IPv4 /24 subnet?",
+    "reinforce_answer": "254",
+    "checkpoint": "For 198.51.100.0/24, give the broadcast address.",
+    "checkpoint_answer": "198.51.100.255",
+    "prerequisites": [
+      "network-model"
+    ],
+    "takeaways": [
+      "IPv4 has 32 bits; a /24 leaves eight host bits.",
+      "For a conventional /24, exclude network and broadcast from usable host addresses."
+    ],
+    "connection": "Subnet scope helps a host choose local delivery versus a gateway.",
+    "minutes": 6,
+    "sources": [],
+    "practice_feedback": "32 total bits minus 24 network bits leaves 8 host bits.",
+    "reinforce_feedback": "2^8 gives 256 addresses; subtract network and broadcast to get 254.",
+    "checkpoint_feedback": "The final address in this /24 is 198.51.100.255, its broadcast address.",
+    "case_sensitive": false
+  },
+  {
+    "id": "tcp-udp",
+    "title": "Networks: TCP, UDP and ports",
+    "path": "network",
+    "tiers": [
+      "network",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "ccna"
+    ],
+    "prerequisites": [
+      "network-model"
+    ],
+    "learn": "Transport protocols carry application data between endpoints. TCP provides an ordered byte stream with retransmission and connection state. UDP sends datagrams without built-in delivery or ordering guarantees; an application may add its own mechanisms. Ports distinguish transport endpoints on a host. A familiar port number suggests a convention, not proof of a service identity. TCP and UDP have separate port namespaces. Application behaviour and encryption are separate from the transport choice.",
+    "observe": "Example endpoint: TCP 192.0.2.10:443\nIP: destination interface. Port: transport endpoint.\nConvention: TCP/443 often carries HTTPS, but verify service behaviour.",
+    "takeaways": [
+      "An endpoint combines addressing with transport context.",
+      "Port numbers are clues, not confirmed identities."
+    ],
+    "connection": "Service investigation requires corroboration rather than guessing from a number.",
+    "minutes": 8,
+    "practice": "Which protocol provides an ordered reliable byte stream: TCP or UDP?",
+    "answer": "TCP",
+    "practice_feedback": "TCP handles ordering and retransmission within its stream.",
+    "reinforce": "Does UDP itself guarantee datagram delivery? Answer yes or no.",
+    "reinforce_answer": "no",
+    "reinforce_feedback": "UDP has no built-in delivery guarantee.",
+    "checkpoint": "Does a listener on TCP port 443 alone prove it is HTTPS? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "A port convention is a clue; it does not establish what application is listening.",
+    "sources": [
+      {
+        "title": "RFC 9293: TCP",
+        "url": "https://www.rfc-editor.org/rfc/rfc9293"
+      }
+    ],
+    "case_sensitive": false
   },
   {
     "id": "dns",
@@ -103,11 +706,26 @@
     "reinforce": "Which DNS record type represents an IPv6 address?",
     "reinforce_answer": "AAAA",
     "checkpoint": "DNS resolves a web server name. Does that alone prove its HTTPS service is reachable? Answer yes or no.",
-    "checkpoint_answer": "no"
+    "checkpoint_answer": "no",
+    "prerequisites": [
+      "network-model",
+      "tcp-udp"
+    ],
+    "takeaways": [
+      "A and AAAA represent IPv4 and IPv6 addresses.",
+      "Resolving a name is separate from reaching its service."
+    ],
+    "connection": "DNS helps locate services, while transport and application checks establish their behaviour.",
+    "minutes": 6,
+    "sources": [],
+    "practice_feedback": "A records hold IPv4 addresses.",
+    "reinforce_feedback": "AAAA records hold IPv6 addresses.",
+    "checkpoint_feedback": "Resolution locates an address; it does not test the HTTPS service.",
+    "case_sensitive": false
   },
   {
-    "id": "subnets",
-    "title": "IPv4: addresses and subnet scope",
+    "id": "dhcp",
+    "title": "Networks: DHCP and host configuration",
     "path": "network",
     "tiers": [
       "network",
@@ -117,13 +735,143 @@
     "exams": [
       "ccna"
     ],
-    "learn": "An IPv4 address has 32 bits. A /24 prefix uses 24 network bits and leaves 8 host bits: 256 addresses. In a conventional IPv4 /24 subnet, one address is the network identifier and one is broadcast, leaving 254 usable host addresses.",
-    "observe": "192.0.2.0/24\nNetwork: 192.0.2.0\nHosts: 192.0.2.1\u2013192.0.2.254\nBroadcast: 192.0.2.255",
-    "practice": "How many host bits remain in an IPv4 /24?",
-    "answer": "8",
-    "reinforce": "How many usable host addresses are in a conventional IPv4 /24 subnet?",
-    "reinforce_answer": "254",
-    "checkpoint": "For 198.51.100.0/24, give the broadcast address.",
-    "checkpoint_answer": "198.51.100.255"
+    "prerequisites": [
+      "network-model",
+      "subnets"
+    ],
+    "learn": "DHCP can supply IPv4 configuration including an address lease, subnet mask, router and DNS servers. In the familiar initial exchange, a client discovers servers, receives an offer, requests configuration and receives an acknowledgement. A lease is time-limited. Address assignment does not guarantee that DNS or a gateway works. Inspect the assigned settings before assuming the application is broken; static configuration and DHCP both need correct network values.",
+    "observe": "Initial IPv4 exchange: Discover → Offer → Request → Acknowledge\nLease address: 192.0.2.20/24\nRouter: 192.0.2.1\nDNS server: 192.0.2.53\n# An illustrative configured host.",
+    "takeaways": [
+      "Inspect address, prefix, gateway and resolver together.",
+      "Configuration assignment is not end-to-end connectivity."
+    ],
+    "connection": "Differentiate configuration problems from DNS or service failures.",
+    "minutes": 8,
+    "practice": "Which protocol commonly supplies an address lease: DNS or DHCP?",
+    "answer": "DHCP",
+    "practice_feedback": "DHCP supplies configuration; DNS resolves names.",
+    "reinforce": "After Discover, which message in this initial exchange is next: Offer or Acknowledge?",
+    "reinforce_answer": "Offer",
+    "reinforce_feedback": "The server offers configuration before the client requests it.",
+    "checkpoint": "Does a valid address lease by itself prove DNS resolution works? Answer yes or no.",
+    "checkpoint_answer": "no",
+    "checkpoint_feedback": "Addressing and name resolution are separate checks.",
+    "sources": [
+      {
+        "title": "RFC 2131: DHCP",
+        "url": "https://www.rfc-editor.org/rfc/rfc2131"
+      }
+    ],
+    "case_sensitive": false
+  },
+  {
+    "id": "gateways",
+    "title": "Networks: subnet decisions and default gateways",
+    "path": "network",
+    "tiers": [
+      "network",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "ccna"
+    ],
+    "prerequisites": [
+      "subnets",
+      "network-model"
+    ],
+    "learn": "A host uses its prefix and routing table to choose where to send a packet. For a simple /24 local network, matching network portions indicate a local destination. Traffic for another network usually goes to a router, often through the default route when no more specific route applies. The default gateway is a next hop, not a DNS server. The packet retains its remote IP destination while its local-link frame is sent to the gateway.",
+    "observe": "Host: 192.0.2.20/24\nDestination 192.0.2.50: same subnet.\nDestination 198.51.100.25: different subnet.\nDefault route: via 192.0.2.1\n# Assume no more specific route in this simple example.",
+    "takeaways": [
+      "Use the prefix, not just the first few digits by intuition.",
+      "A gateway forwards; a resolver answers name queries."
+    ],
+    "connection": "This joins addressing knowledge to real troubleshooting decisions.",
+    "minutes": 8,
+    "practice": "From 192.0.2.20/24, is 192.0.2.50 local or remote?",
+    "answer": "local",
+    "practice_feedback": "Both addresses have the 192.0.2 network portion with /24.",
+    "reinforce": "From 192.0.2.20/24, is 198.51.100.25 local or remote?",
+    "reinforce_answer": "remote",
+    "reinforce_feedback": "The /24 network portions differ.",
+    "checkpoint": "In the shown default route, what is the next-hop address for the remote destination?",
+    "checkpoint_answer": "192.0.2.1",
+    "checkpoint_feedback": "With no more specific route, the host forwards to its default gateway.",
+    "sources": [],
+    "case_sensitive": false
+  },
+  {
+    "id": "http-tls",
+    "title": "Networks: HTTP, HTTPS and trust boundaries",
+    "path": "network",
+    "tiers": [
+      "network",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "ccna"
+    ],
+    "prerequisites": [
+      "dns",
+      "tcp-udp"
+    ],
+    "learn": "HTTP is an application protocol carrying requests and responses. HTTPS uses TLS to protect the connection and authenticate the server name when certificate validation succeeds. Encryption in transit does not prove a website is honest or an application has correct permissions. A 404 status means the requested resource was not found; 403 signals refusal of access. Status codes need context and do not reveal every underlying cause. HTTP versions can use different transports; do not assume all HTTPS traffic is TCP.",
+    "observe": "Request: GET /report\nResponse: 403 Forbidden\nInterpretation: access was refused; successful name resolution or TLS does not override authorisation.\nA valid TLS connection to a deceptive site can still be unsafe.",
+    "takeaways": [
+      "Separate protected transport from trustworthy content.",
+      "Use response evidence without overclaiming the cause."
+    ],
+    "connection": "Network observations connect with authentication, authorisation and phishing awareness.",
+    "minutes": 8,
+    "practice": "Does HTTPS alone prove a website is trustworthy? Answer yes or no.",
+    "answer": "no",
+    "practice_feedback": "TLS protects the connection; a deceptive operator can still run a valid HTTPS site.",
+    "reinforce": "Which status indicates a missing resource in this example: 403 or 404?",
+    "reinforce_answer": "404",
+    "reinforce_feedback": "404 describes a resource not found in the HTTP response.",
+    "checkpoint": "Can authorisation deny access even when TLS validation succeeds? Answer yes or no.",
+    "checkpoint_answer": "yes",
+    "checkpoint_feedback": "Transport protection and application access control are distinct checks.",
+    "sources": [],
+    "case_sensitive": false
+  },
+  {
+    "id": "network-troubleshooting",
+    "title": "Networks: troubleshoot with evidence",
+    "path": "network",
+    "tiers": [
+      "network",
+      "practitioner",
+      "junior"
+    ],
+    "exams": [
+      "ccna"
+    ],
+    "prerequisites": [
+      "dhcp",
+      "gateways",
+      "dns",
+      "http-tls"
+    ],
+    "learn": "Break a failure into layers: local interface/configuration, route, name resolution, transport reachability and application behaviour. Compare tests that answer different questions instead of repeating one command. ping uses ICMP echo and may be blocked; lack of a reply does not prove a host is down. A successful DNS response does not establish that a web service accepts connections. Record the observation, its limits and the next useful check.",
+    "observe": "Host configuration: address and gateway present.\nDNS: name resolves.\nWeb request: connection times out.\nNext focus: transport reachability/service path, rather than claiming DNS failed.\nICMP reply absent: inconclusive without other evidence.",
+    "takeaways": [
+      "Choose tests that distinguish possible causes.",
+      "State what an observation supports and what remains unknown."
+    ],
+    "connection": "Evidence-led troubleshooting prepares for both defensive investigation and scoped security assessment.",
+    "minutes": 8,
+    "practice": "Does no ping reply alone prove a host is down? Answer yes or no.",
+    "answer": "no",
+    "practice_feedback": "ICMP may be filtered even while other services work.",
+    "reinforce": "If a name resolves correctly, has that DNS query succeeded? Answer yes or no.",
+    "reinforce_answer": "yes",
+    "reinforce_feedback": "That observation supports resolution for the queried name, not service reachability.",
+    "checkpoint": "DNS works but the HTTPS connection times out. Choose the next focus: name spelling or transport reachability.",
+    "checkpoint_answer": "transport reachability",
+    "checkpoint_feedback": "The successful DNS result shifts attention to the connection path and service, while further evidence is still needed.",
+    "sources": [],
+    "case_sensitive": false
   }
 ]
